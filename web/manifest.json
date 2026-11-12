@@ -1,6 +1,6 @@
 {
-    "name": "alagalerta_app",
-    "short_name": "alagalerta_app",
+    "name": "AlagAlerta",
+    "short_name": "AlagAlerta",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

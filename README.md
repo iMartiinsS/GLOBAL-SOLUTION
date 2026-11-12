@@ -64,6 +64,16 @@ Nenhuma senha ou chave real fica versionada no repositório.
 mvnw.cmd test
 ```
 
+### Docker / Azure
+
+A API roda com PostgreSQL em dois containers (`Dockerfile` + `docker-compose.yml`) em uma VM provisionada por
+Azure CLI. O passo a passo completo está em **[docs/DEVOPS.md](docs/DEVOPS.md)**. Para subir localmente:
+
+```bash
+cp .env.example .env   # defina POSTGRES_PASSWORD e JWT_SECRET
+docker compose up -d --build
+```
+
 ## Usuários de teste por papel
 
 Todos com a senha **`Teste@2026`** (somente dados de demonstração):

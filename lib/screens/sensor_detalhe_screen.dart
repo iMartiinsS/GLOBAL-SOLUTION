@@ -28,16 +28,30 @@ class SensorDetalheScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(sensor.localizacao,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
-                  Text('${sensor.regiao.nome} · ${sensor.regiao.cidade}',
-                      style: const TextStyle(color: AppColors.textoSuave)),
+                  Text(
+                    sensor.localizacao,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.texto,
+                    ),
+                  ),
+                  Text(
+                    '${sensor.regiao.nome} · ${sensor.regiao.cidade}',
+                    style: const TextStyle(color: AppColors.textoSuave),
+                  ),
                   const SizedBox(height: AppSpacing.md),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('${ultima.nivelAguaCm.toStringAsFixed(0)} cm',
-                          style: TextStyle(fontSize: 40, fontWeight: FontWeight.w800, color: ultima.nivel.cor)),
+                      Text(
+                        '${ultima.nivelAguaCm.toStringAsFixed(0)} cm',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w800,
+                          color: ultima.nivel.cor,
+                        ),
+                      ),
                       const SizedBox(width: AppSpacing.sm),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
@@ -50,9 +64,15 @@ class SensorDetalheScreen extends StatelessWidget {
                   const SizedBox(height: AppSpacing.sm),
                   Row(
                     children: [
-                      _Limite(cor: AppColors.alerta, texto: 'Alerta ${sensor.nivelAlertaCm} cm'),
+                      _Limite(
+                        cor: AppColors.alerta,
+                        texto: 'Alerta ${sensor.nivelAlertaCm} cm',
+                      ),
                       const SizedBox(width: AppSpacing.md),
-                      _Limite(cor: AppColors.emergencia, texto: 'Crítico ${sensor.nivelCriticoCm} cm'),
+                      _Limite(
+                        cor: AppColors.emergencia,
+                        texto: 'Crítico ${sensor.nivelCriticoCm} cm',
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -60,10 +80,17 @@ class SensorDetalheScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.grain, color: AppColors.azul, size: 20),
                       const SizedBox(width: AppSpacing.xs),
-                      Text('Chuva agora: ${ultima.chuvaMmHora.toStringAsFixed(0)} mm/h'),
+                      Text(
+                        'Chuva agora: ${ultima.chuvaMmHora.toStringAsFixed(0)} mm/h',
+                      ),
                       const Spacer(),
-                      Text(tempoRelativo(ultima.dataHora),
-                          style: const TextStyle(color: AppColors.textoSuave, fontSize: 12)),
+                      Text(
+                        tempoRelativo(ultima.dataHora),
+                        style: const TextStyle(
+                          color: AppColors.textoSuave,
+                          fontSize: 12,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -71,8 +98,14 @@ class SensorDetalheScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          const Text('Evolução do nível',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
+          const Text(
+            'Evolução do nível',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppColors.texto,
+            ),
+          ),
           const SizedBox(height: AppSpacing.sm),
           Card(
             child: Padding(
@@ -89,18 +122,31 @@ class SensorDetalheScreen extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(l.nivelAguaCm.toStringAsFixed(0), style: const TextStyle(fontSize: 11)),
+                              Text(
+                                l.nivelAguaCm.toStringAsFixed(0),
+                                style: const TextStyle(fontSize: 11),
+                              ),
                               const SizedBox(height: 2),
                               Container(
-                                height: 110 * (l.nivelAguaCm / sensor.nivelCriticoCm).clamp(0.04, 1.0),
+                                height:
+                                    110 *
+                                    (l.nivelAguaCm / sensor.nivelCriticoCm)
+                                        .clamp(0.04, 1.0),
                                 decoration: BoxDecoration(
                                   color: l.nivel.cor,
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(6),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 4),
-                              Text(horaMinuto(l.dataHora),
-                                  style: const TextStyle(fontSize: 10, color: AppColors.textoSuave)),
+                              Text(
+                                horaMinuto(l.dataHora),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.textoSuave,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -111,8 +157,14 @@ class SensorDetalheScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          const Text('Leituras recentes',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
+          const Text(
+            'Leituras recentes',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppColors.texto,
+            ),
+          ),
           const SizedBox(height: AppSpacing.sm),
           Card(
             child: ListView.separated(
@@ -124,7 +176,9 @@ class SensorDetalheScreen extends StatelessWidget {
                 final l = sensor.leituras[i];
                 return ListTile(
                   leading: Icon(l.nivel.icone, color: l.nivel.cor),
-                  title: Text('${l.nivelAguaCm.toStringAsFixed(0)} cm · ${l.chuvaMmHora.toStringAsFixed(0)} mm/h'),
+                  title: Text(
+                    '${l.nivelAguaCm.toStringAsFixed(0)} cm · ${l.chuvaMmHora.toStringAsFixed(0)} mm/h',
+                  ),
                   subtitle: Text(dataHora(l.dataHora)),
                   trailing: NivelBadge(nivel: l.nivel, compacto: true),
                 );
@@ -147,9 +201,16 @@ class _Limite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(width: 10, height: 10, decoration: BoxDecoration(color: cor, shape: BoxShape.circle)),
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(color: cor, shape: BoxShape.circle),
+        ),
         const SizedBox(width: AppSpacing.xs),
-        Text(texto, style: const TextStyle(fontSize: 12, color: AppColors.textoSuave)),
+        Text(
+          texto,
+          style: const TextStyle(fontSize: 12, color: AppColors.textoSuave),
+        ),
       ],
     );
   }

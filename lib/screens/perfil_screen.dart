@@ -26,11 +26,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Sair do AlagAlerta?'),
-        content: const Text('Você deixará de receber alertas neste aparelho até entrar novamente.'),
+        content: const Text(
+          'Você deixará de receber alertas neste aparelho até entrar novamente.',
+        ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
           TextButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(context, LoginScreen.rota, (_) => false),
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              LoginScreen.rota,
+              (_) => false,
+            ),
             child: const Text('Sair'),
           ),
         ],
@@ -42,7 +51,10 @@ class _PerfilScreenState extends State<PerfilScreen> {
   Widget build(BuildContext context) {
     final u = widget.usuario;
     return Scaffold(
-      appBar: AppBar(title: const Text('Perfil')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Perfil'),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
@@ -54,21 +66,40 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: AppColors.azul,
-                    child: Text(u.nome[0], style: const TextStyle(color: Colors.white, fontSize: 26)),
+                    child: Text(
+                      u.nome[0],
+                      style: const TextStyle(color: Colors.white, fontSize: 26),
+                    ),
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(u.nome, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-                        Text(u.email, style: const TextStyle(color: AppColors.textoSuave)),
+                        Text(
+                          u.nome,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          u.email,
+                          style: const TextStyle(color: AppColors.textoSuave),
+                        ),
                         const SizedBox(height: AppSpacing.xs),
                         Row(
                           children: [
-                            const Icon(Icons.home_outlined, size: 16, color: AppColors.azul),
+                            const Icon(
+                              Icons.home_outlined,
+                              size: 16,
+                              color: AppColors.azul,
+                            ),
                             const SizedBox(width: AppSpacing.xs),
-                            Text('${u.regiao.nome} · ${u.regiao.cidade}', style: const TextStyle(fontSize: 13)),
+                            Text(
+                              '${u.regiao.nome} · ${u.regiao.cidade}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
                           ],
                         ),
                       ],
@@ -79,7 +110,10 @@ class _PerfilScreenState extends State<PerfilScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          const Text('Notificações', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const Text(
+            'Notificações',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+          ),
           const SizedBox(height: AppSpacing.sm),
           Card(
             child: Column(
@@ -92,14 +126,18 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 ),
                 SwitchListTile(
                   value: _somAlto,
-                  onChanged: _notificacoes ? (v) => setState(() => _somAlto = v) : null,
+                  onChanged: _notificacoes
+                      ? (v) => setState(() => _somAlto = v)
+                      : null,
                   title: const Text('Tocar alarme mesmo no silencioso'),
                   subtitle: const Text('Somente para Emergência'),
                   secondary: const Icon(Icons.volume_up_outlined),
                 ),
                 SwitchListTile(
                   value: _soMeuBairro,
-                  onChanged: _notificacoes ? (v) => setState(() => _soMeuBairro = v) : null,
+                  onChanged: _notificacoes
+                      ? (v) => setState(() => _soMeuBairro = v)
+                      : null,
                   title: const Text('Somente do meu bairro'),
                   secondary: const Icon(Icons.my_location),
                 ),
@@ -110,10 +148,15 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   trailing: DropdownButton<NivelRisco>(
                     value: _nivelMinimo,
                     underline: const SizedBox.shrink(),
-                    onChanged: _notificacoes ? (n) => setState(() => _nivelMinimo = n!) : null,
+                    onChanged: _notificacoes
+                        ? (n) => setState(() => _nivelMinimo = n!)
+                        : null,
                     items: [
                       for (final n in NivelRisco.values.skip(1))
-                        DropdownMenuItem(value: n, child: Text(n.rotulo, style: TextStyle(color: n.cor))),
+                        DropdownMenuItem(
+                          value: n,
+                          child: Text(n.rotulo, style: TextStyle(color: n.cor)),
+                        ),
                     ],
                   ),
                 ),
@@ -124,9 +167,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
           Text(
             _notificacoes
                 ? 'Você será avisado de alertas de ${_nivelMinimo.rotulo.toLowerCase()} ou mais graves'
-                    '${_soMeuBairro ? ' no ${u.regiao.nome}' : ' em todas as regiões'}.'
+                      '${_soMeuBairro ? ' no ${u.regiao.nome}' : ' em todas as regiões'}.'
                 : 'Alertas desativados. Você só verá avisos ao abrir o app.',
-            style: TextStyle(color: _notificacoes ? AppColors.textoSuave : AppColors.emergencia),
+            style: TextStyle(
+              color: _notificacoes
+                  ? AppColors.textoSuave
+                  : AppColors.emergencia,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           Card(
@@ -142,12 +189,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
                 const ListTile(
                   leading: Icon(Icons.public),
                   title: Text('ODS 11 e 13 da ONU'),
-                  subtitle: Text('Cidades sustentáveis e ação contra a mudança do clima'),
+                  subtitle: Text(
+                    'Cidades sustentáveis e ação contra a mudança do clima',
+                  ),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.logout, color: AppColors.emergencia),
-                  title: const Text('Sair', style: TextStyle(color: AppColors.emergencia)),
+                  leading: const Icon(
+                    Icons.logout,
+                    color: AppColors.emergencia,
+                  ),
+                  title: const Text(
+                    'Sair',
+                    style: TextStyle(color: AppColors.emergencia),
+                  ),
                   onTap: _sair,
                 ),
               ],

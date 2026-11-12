@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/mock_data.dart';
 import '../models/models.dart';
 import 'inicio_screen.dart';
 import 'ocorrencias_screen.dart';
@@ -24,8 +25,11 @@ class _HomeShellState extends State<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
-    // parâmetro recebido da tela de login via Navigator.pushReplacementNamed
-    final usuario = ModalRoute.of(context)!.settings.arguments as Usuario;
+    // parâmetro recebido da tela de login via Navigator.pushReplacementNamed.
+    // Se a tela for recarregada (ex.: F5 no navegador), o argumento se perde: mantém o usuário da sessão de teste.
+    final usuario =
+        ModalRoute.of(context)?.settings.arguments as Usuario? ??
+        MockData.usuarioTeste;
 
     final abas = <Widget>[
       InicioScreen(usuario: usuario, onAbrirAba: _irPara),
@@ -34,17 +38,41 @@ class _HomeShellState extends State<HomeShell> {
       PerfilScreen(usuario: usuario),
     ];
 
-    return Scaffold(
-      body: IndexedStack(index: _abaAtual, children: abas),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _abaAtual,
-        onDestinationSelected: _irPara,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Início'),
-          NavigationDestination(icon: Icon(Icons.sensors_outlined), selectedIcon: Icon(Icons.sensors), label: 'Sensores'),
-          NavigationDestination(icon: Icon(Icons.report_outlined), selectedIcon: Icon(Icons.report), label: 'Ocorrências'),
-          NavigationDestination(icon: Icon(Icons.person_outline), selectedIcon: Icon(Icons.person), label: 'Perfil'),
-        ],
+    // O botão "voltar" não desloga: fora da aba Início ele volta para o Início; no Início ele não faz nada.
+    // Para sair, use Perfil → Sair.
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && _abaAtual != 0) _irPara(0);
+      },
+      child: Scaffold(
+        body: IndexedStack(index: _abaAtual, children: abas),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _abaAtual,
+          onDestinationSelected: _irPara,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Início',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.sensors_outlined),
+              selectedIcon: Icon(Icons.sensors),
+              label: 'Sensores',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.report_outlined),
+              selectedIcon: Icon(Icons.report),
+              label: 'Ocorrências',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Perfil',
+            ),
+          ],
+        ),
       ),
     );
   }

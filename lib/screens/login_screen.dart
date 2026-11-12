@@ -45,25 +45,42 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final email = _emailController.text.trim().toLowerCase();
-    final ok = email == MockData.usuarioTeste.email && _senhaController.text == MockData.senhaTeste;
+    final ok =
+        email == MockData.usuarioTeste.email &&
+        _senhaController.text == MockData.senhaTeste;
     if (!ok) {
       showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
           icon: const Icon(Icons.lock_outline, color: AppColors.emergencia),
           title: const Text('Não foi possível entrar'),
-          content: const Text('E-mail ou senha incorretos. Confira os dados e tente novamente.'),
-          actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK'))],
+          content: const Text(
+            'E-mail ou senha incorretos. Confira os dados e tente novamente.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
         ),
       );
       return;
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Bem-vinda, ${MockData.usuarioTeste.nome.split(' ').first}!')),
+      SnackBar(
+        content: Text(
+          'Bem-vinda, ${MockData.usuarioTeste.nome.split(' ').first}!',
+        ),
+      ),
     );
     // passagem de parâmetro: o usuário logado segue para a tela principal
-    Navigator.pushReplacementNamed(context, HomeShell.rota, arguments: MockData.usuarioTeste);
+    Navigator.pushReplacementNamed(
+      context,
+      HomeShell.rota,
+      arguments: MockData.usuarioTeste,
+    );
   }
 
   @override
@@ -83,7 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(
                     'AlagAlerta',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800, color: AppColors.azul),
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.azul,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   const Text(
@@ -112,9 +133,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       labelText: 'Senha',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
-                        tooltip: _senhaVisivel ? 'Ocultar senha' : 'Mostrar senha',
-                        icon: Icon(_senhaVisivel ? Icons.visibility_off : Icons.visibility),
-                        onPressed: () => setState(() => _senhaVisivel = !_senhaVisivel),
+                        tooltip: _senhaVisivel
+                            ? 'Ocultar senha'
+                            : 'Mostrar senha',
+                        icon: Icon(
+                          _senhaVisivel
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () =>
+                            setState(() => _senhaVisivel = !_senhaVisivel),
                       ),
                     ),
                     validator: _validarSenha,
@@ -134,12 +162,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: const Row(
                       children: [
-                        Icon(Icons.info_outline, color: AppColors.azul, size: 20),
+                        Icon(
+                          Icons.info_outline,
+                          color: AppColors.azul,
+                          size: 20,
+                        ),
                         SizedBox(width: AppSpacing.sm),
                         Expanded(
                           child: Text(
                             'Usuário de teste: cidadao@alagalerta.com · senha Teste@2026',
-                            style: TextStyle(fontSize: 13, color: AppColors.texto),
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: AppColors.texto,
+                            ),
                           ),
                         ),
                       ],

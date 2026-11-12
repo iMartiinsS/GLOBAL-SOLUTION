@@ -23,7 +23,9 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
   Future<void> _novoRelato() async {
     final criada = await Navigator.push<Ocorrencia>(
       context,
-      MaterialPageRoute(builder: (_) => ReportarScreen(regiaoInicial: widget.usuario.regiao)),
+      MaterialPageRoute(
+        builder: (_) => ReportarScreen(regiaoInicial: widget.usuario.regiao),
+      ),
     );
     if (criada != null) {
       setState(() => MockData.ocorrencias.insert(0, criada));
@@ -46,11 +48,18 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
   @override
   Widget build(BuildContext context) {
     final todas = MockData.ocorrencias;
-    final lista = _filtro == null ? todas : todas.where((o) => o.status == _filtro).toList();
-    final abertas = todas.where((o) => o.status == StatusOcorrencia.aberta).length;
+    final lista = _filtro == null
+        ? todas
+        : todas.where((o) => o.status == _filtro).toList();
+    final abertas = todas
+        .where((o) => o.status == StatusOcorrencia.aberta)
+        .length;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Ocorrências')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Ocorrências'),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _novoRelato,
         icon: const Icon(Icons.add),
@@ -67,10 +76,18 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
               children: [
                 const Icon(Icons.pending_actions, color: AppColors.azul),
                 const SizedBox(width: AppSpacing.sm),
-                Text('Ocorrências abertas: $abertas',
-                    style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.azul)),
+                Text(
+                  'Ocorrências abertas: $abertas',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.azul,
+                  ),
+                ),
                 const Spacer(),
-                Text('Total: ${todas.length}', style: const TextStyle(color: AppColors.textoSuave)),
+                Text(
+                  'Total: ${todas.length}',
+                  style: const TextStyle(color: AppColors.textoSuave),
+                ),
               ],
             ),
           ),
@@ -78,7 +95,10 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
             height: 56,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: AppSpacing.sm),
@@ -104,15 +124,26 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
           Expanded(
             child: lista.isEmpty
                 ? const Center(
-                    child: Text('Nenhuma ocorrência neste filtro.', style: TextStyle(color: AppColors.textoSuave)),
+                    child: Text(
+                      'Nenhuma ocorrência neste filtro.',
+                      style: TextStyle(color: AppColors.textoSuave),
+                    ),
                   )
                 : ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, 90),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.md,
+                      0,
+                      AppSpacing.md,
+                      90,
+                    ),
                     itemCount: lista.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
                     itemBuilder: (context, i) => _OcorrenciaCard(
                       ocorrencia: lista[i],
-                      onRemover: lista[i].status == StatusOcorrencia.aberta ? () => _remover(lista[i]) : null,
+                      onRemover: lista[i].status == StatusOcorrencia.aberta
+                          ? () => _remover(lista[i])
+                          : null,
                     ),
                   ),
           ),
@@ -129,10 +160,10 @@ class _OcorrenciaCard extends StatelessWidget {
   final VoidCallback? onRemover;
 
   Color get _corStatus => switch (ocorrencia.status) {
-        StatusOcorrencia.aberta => AppColors.alerta,
-        StatusOcorrencia.emAtendimento => AppColors.azul,
-        StatusOcorrencia.resolvida => AppColors.normal,
-      };
+    StatusOcorrencia.aberta => AppColors.alerta,
+    StatusOcorrencia.emAtendimento => AppColors.azul,
+    StatusOcorrencia.resolvida => AppColors.normal,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -147,10 +178,21 @@ class _OcorrenciaCard extends StatelessWidget {
               children: [
                 Icon(o.status.icone, color: _corStatus, size: 20),
                 const SizedBox(width: AppSpacing.xs),
-                Text(o.status.rotulo, style: TextStyle(color: _corStatus, fontWeight: FontWeight.w700)),
+                Text(
+                  o.status.rotulo,
+                  style: TextStyle(
+                    color: _corStatus,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const Spacer(),
-                Text('#${o.id} · ${tempoRelativo(o.registradaEm)}',
-                    style: const TextStyle(color: AppColors.textoSuave, fontSize: 12)),
+                Text(
+                  '#${o.id} · ${tempoRelativo(o.registradaEm)}',
+                  style: const TextStyle(
+                    color: AppColors.textoSuave,
+                    fontSize: 12,
+                  ),
+                ),
                 if (onRemover != null)
                   IconButton(
                     visualDensity: VisualDensity.compact,
@@ -161,15 +203,31 @@ class _OcorrenciaCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
-            Text(o.descricao, style: const TextStyle(fontSize: 15, color: AppColors.texto, height: 1.3)),
+            Text(
+              o.descricao,
+              style: const TextStyle(
+                fontSize: 15,
+                color: AppColors.texto,
+                height: 1.3,
+              ),
+            ),
             const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
-                const Icon(Icons.place_outlined, size: 16, color: AppColors.textoSuave),
+                const Icon(
+                  Icons.place_outlined,
+                  size: 16,
+                  color: AppColors.textoSuave,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
-                  child: Text('${o.endereco} · ${o.regiao.nome}',
-                      style: const TextStyle(color: AppColors.textoSuave, fontSize: 13)),
+                  child: Text(
+                    '${o.endereco} · ${o.regiao.nome}',
+                    style: const TextStyle(
+                      color: AppColors.textoSuave,
+                      fontSize: 13,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -178,12 +236,26 @@ class _OcorrenciaCard extends StatelessWidget {
               Row(
                 children: [
                   if ((o.alturaAguaCm ?? 0) > 0) ...[
-                    const Icon(Icons.height, size: 16, color: AppColors.textoSuave),
-                    Text(' ${o.alturaAguaCm} cm   ', style: const TextStyle(fontSize: 13)),
+                    const Icon(
+                      Icons.height,
+                      size: 16,
+                      color: AppColors.textoSuave,
+                    ),
+                    Text(
+                      ' ${o.alturaAguaCm} cm   ',
+                      style: const TextStyle(fontSize: 13),
+                    ),
                   ],
                   if ((o.pessoasAfetadas ?? 0) > 0) ...[
-                    const Icon(Icons.groups_outlined, size: 16, color: AppColors.textoSuave),
-                    Text(' ${o.pessoasAfetadas} pessoas', style: const TextStyle(fontSize: 13)),
+                    const Icon(
+                      Icons.groups_outlined,
+                      size: 16,
+                      color: AppColors.textoSuave,
+                    ),
+                    Text(
+                      ' ${o.pessoasAfetadas} pessoas',
+                      style: const TextStyle(fontSize: 13),
+                    ),
                   ],
                 ],
               ),

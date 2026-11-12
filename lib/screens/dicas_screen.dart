@@ -61,7 +61,14 @@ class DicasScreen extends StatelessWidget {
                       children: [
                         Icon(icone, color: cor),
                         const SizedBox(width: AppSpacing.sm),
-                        Text(titulo, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: cor)),
+                        Text(
+                          titulo,
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: cor,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.sm),
@@ -73,7 +80,12 @@ class DicasScreen extends StatelessWidget {
                           children: [
                             Icon(Icons.check, size: 18, color: cor),
                             const SizedBox(width: AppSpacing.sm),
-                            Expanded(child: Text(item, style: const TextStyle(height: 1.3))),
+                            Expanded(
+                              child: Text(
+                                item,
+                                style: const TextStyle(height: 1.3),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -83,8 +95,14 @@ class DicasScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm + 4),
           ],
-          const Text('Telefones de emergência',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
+          const Text(
+            'Telefones de emergência',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppColors.texto,
+            ),
+          ),
           const SizedBox(height: AppSpacing.sm),
           GridView.count(
             crossAxisCount: 3,
@@ -93,9 +111,21 @@ class DicasScreen extends StatelessWidget {
             mainAxisSpacing: AppSpacing.sm,
             crossAxisSpacing: AppSpacing.sm,
             children: const [
-              _Telefone(numero: '199', nome: 'Defesa Civil', icone: Icons.shield),
-              _Telefone(numero: '193', nome: 'Bombeiros', icone: Icons.local_fire_department),
-              _Telefone(numero: '192', nome: 'SAMU', icone: Icons.medical_services),
+              _Telefone(
+                numero: '199',
+                nome: 'Defesa Civil',
+                icone: Icons.shield,
+              ),
+              _Telefone(
+                numero: '193',
+                nome: 'Bombeiros',
+                icone: Icons.local_fire_department,
+              ),
+              _Telefone(
+                numero: '192',
+                nome: 'SAMU',
+                icone: Icons.medical_services,
+              ),
             ],
           ),
         ],
@@ -105,7 +135,11 @@ class DicasScreen extends StatelessWidget {
 }
 
 class _Telefone extends StatelessWidget {
-  const _Telefone({required this.numero, required this.nome, required this.icone});
+  const _Telefone({
+    required this.numero,
+    required this.nome,
+    required this.icone,
+  });
 
   final String numero;
   final String nome;
@@ -119,8 +153,14 @@ class _Telefone extends StatelessWidget {
         children: [
           Icon(icone, color: AppColors.emergencia),
           const SizedBox(height: AppSpacing.xs),
-          Text(numero, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
-          Text(nome, style: const TextStyle(fontSize: 12, color: AppColors.textoSuave)),
+          Text(
+            numero,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+          ),
+          Text(
+            nome,
+            style: const TextStyle(fontSize: 12, color: AppColors.textoSuave),
+          ),
         ],
       ),
     );

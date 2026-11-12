@@ -53,7 +53,9 @@ class _ReportarScreenState extends State<ReportarScreen> {
   Future<void> _enviar() async {
     if (!_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Corrija os campos destacados antes de enviar.')),
+        const SnackBar(
+          content: Text('Corrija os campos destacados antes de enviar.'),
+        ),
       );
       return;
     }
@@ -68,7 +70,10 @@ class _ReportarScreenState extends State<ReportarScreen> {
           '${_pessoaIlhada ? '\n\nComo há pessoa ilhada, ligue também para 193 (Bombeiros).' : ''}',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Revisar')),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Revisar'),
+          ),
           FilledButton(
             style: FilledButton.styleFrom(minimumSize: const Size(100, 40)),
             onPressed: () => Navigator.pop(context, true),
@@ -93,7 +98,9 @@ class _ReportarScreenState extends State<ReportarScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: AppColors.normal,
-        content: Text('Relato #${ocorrencia.id} enviado. Obrigado por ajudar seu bairro!'),
+        content: Text(
+          'Relato #${ocorrencia.id} enviado. Obrigado por ajudar seu bairro!',
+        ),
       ),
     );
     Navigator.pop(context, ocorrencia);
@@ -115,10 +122,16 @@ class _ReportarScreenState extends State<ReportarScreen> {
             const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<Regiao>(
               initialValue: _regiao,
-              decoration: const InputDecoration(labelText: 'Bairro', prefixIcon: Icon(Icons.location_city)),
+              decoration: const InputDecoration(
+                labelText: 'Bairro',
+                prefixIcon: Icon(Icons.location_city),
+              ),
               items: [
                 for (final r in MockData.regioes)
-                  DropdownMenuItem(value: r, child: Text('${r.nome} · ${r.cidade}')),
+                  DropdownMenuItem(
+                    value: r,
+                    child: Text('${r.nome} · ${r.cidade}'),
+                  ),
               ],
               onChanged: (r) => setState(() => _regiao = r!),
             ),
@@ -152,7 +165,10 @@ class _ReportarScreenState extends State<ReportarScreen> {
                   child: TextFormField(
                     controller: _altura,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Água (cm)', prefixIcon: Icon(Icons.height)),
+                    decoration: const InputDecoration(
+                      labelText: 'Água (cm)',
+                      prefixIcon: Icon(Icons.height),
+                    ),
                     validator: (v) => _inteiro(v, max: 500, campo: 'Altura'),
                   ),
                 ),
@@ -161,7 +177,10 @@ class _ReportarScreenState extends State<ReportarScreen> {
                   child: TextFormField(
                     controller: _pessoas,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Pessoas', prefixIcon: Icon(Icons.groups)),
+                    decoration: const InputDecoration(
+                      labelText: 'Pessoas',
+                      prefixIcon: Icon(Icons.groups),
+                    ),
                     validator: (v) => _inteiro(v, max: 10000, campo: 'Pessoas'),
                   ),
                 ),
@@ -173,10 +192,19 @@ class _ReportarScreenState extends State<ReportarScreen> {
               value: _pessoaIlhada,
               onChanged: (v) => setState(() => _pessoaIlhada = v),
               title: const Text('Há pessoa ilhada ou em risco imediato'),
-              secondary: Icon(Icons.sos, color: _pessoaIlhada ? AppColors.emergencia : AppColors.textoSuave),
+              secondary: Icon(
+                Icons.sos,
+                color: _pessoaIlhada
+                    ? AppColors.emergencia
+                    : AppColors.textoSuave,
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
-            FilledButton.icon(onPressed: _enviar, icon: const Icon(Icons.send), label: const Text('Enviar relato')),
+            FilledButton.icon(
+              onPressed: _enviar,
+              icon: const Icon(Icons.send),
+              label: const Text('Enviar relato'),
+            ),
           ],
         ),
       ),

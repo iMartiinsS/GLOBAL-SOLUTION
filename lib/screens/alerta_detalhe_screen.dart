@@ -41,9 +41,11 @@ class _AlertaDetalheScreenState extends State<AlertaDetalheScreen> {
     setState(() => _estouSeguro = !_estouSeguro);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(_estouSeguro
-            ? 'Obrigado! A Defesa Civil vai saber que você está em local seguro.'
-            : 'Status de segurança removido.'),
+        content: Text(
+          _estouSeguro
+              ? 'Obrigado! A Defesa Civil vai saber que você está em local seguro.'
+              : 'Status de segurança removido.',
+        ),
       ),
     );
   }
@@ -68,21 +70,48 @@ class _AlertaDetalheScreenState extends State<AlertaDetalheScreen> {
                     children: [
                       NivelBadge(nivel: alerta.nivel),
                       const Spacer(),
-                      Icon(alerta.nivel.icone, color: alerta.nivel.cor, size: 32),
+                      Icon(
+                        alerta.nivel.icone,
+                        color: alerta.nivel.cor,
+                        size: 32,
+                      ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  Text(alerta.regiao.nome,
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.texto)),
-                  Text(alerta.regiao.cidade, style: const TextStyle(color: AppColors.textoSuave)),
+                  Text(
+                    alerta.regiao.nome,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.texto,
+                    ),
+                  ),
+                  Text(
+                    alerta.regiao.cidade,
+                    style: const TextStyle(color: AppColors.textoSuave),
+                  ),
                   const SizedBox(height: AppSpacing.md),
-                  Text(alerta.mensagem, style: const TextStyle(fontSize: 16, height: 1.4, color: AppColors.texto)),
+                  Text(
+                    alerta.mensagem,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      height: 1.4,
+                      color: AppColors.texto,
+                    ),
+                  ),
                   const SizedBox(height: AppSpacing.md),
-                  _Info(icone: Icons.schedule, texto: 'Emitido ${dataHora(alerta.emitidoEm)}'),
-                  _Info(icone: Icons.campaign_outlined, texto: 'Origem: ${alerta.origem}'),
+                  _Info(
+                    icone: Icons.schedule,
+                    texto: 'Emitido ${dataHora(alerta.emitidoEm)}',
+                  ),
+                  _Info(
+                    icone: Icons.campaign_outlined,
+                    texto: 'Origem: ${alerta.origem}',
+                  ),
                   _Info(
                     icone: Icons.groups_outlined,
-                    texto: '${alerta.regiao.populacaoRisco} moradores em área de risco',
+                    texto:
+                        '${alerta.regiao.populacaoRisco} moradores em área de risco',
                   ),
                 ],
               ),
@@ -98,7 +127,9 @@ class _AlertaDetalheScreenState extends State<AlertaDetalheScreen> {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => SensorDetalheScreen(sensor: alerta.sensor!)),
+                  MaterialPageRoute(
+                    builder: (_) => SensorDetalheScreen(sensor: alerta.sensor!),
+                  ),
                 ),
               ),
             ),
@@ -107,11 +138,22 @@ class _AlertaDetalheScreenState extends State<AlertaDetalheScreen> {
           Row(
             children: [
               const Expanded(
-                child: Text('Prepare-se',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
+                child: Text(
+                  'Prepare-se',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.texto,
+                  ),
+                ),
               ),
-              Text('Itens preparados: ${_marcados.length}/${_itens.length}',
-                  style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.azul)),
+              Text(
+                'Itens preparados: ${_marcados.length}/${_itens.length}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.azul,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -144,8 +186,14 @@ class _AlertaDetalheScreenState extends State<AlertaDetalheScreen> {
               backgroundColor: _estouSeguro ? AppColors.normal : AppColors.azul,
             ),
             onPressed: _confirmarSeguranca,
-            icon: Icon(_estouSeguro ? Icons.verified_user : Icons.shield_outlined),
-            label: Text(_estouSeguro ? 'Você marcou que está seguro' : 'Estou em local seguro'),
+            icon: Icon(
+              _estouSeguro ? Icons.verified_user : Icons.shield_outlined,
+            ),
+            label: Text(
+              _estouSeguro
+                  ? 'Você marcou que está seguro'
+                  : 'Estou em local seguro',
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
         ],
@@ -168,7 +216,12 @@ class _Info extends StatelessWidget {
         children: [
           Icon(icone, size: 18, color: AppColors.textoSuave),
           const SizedBox(width: AppSpacing.sm),
-          Expanded(child: Text(texto, style: const TextStyle(color: AppColors.textoSuave))),
+          Expanded(
+            child: Text(
+              texto,
+              style: const TextStyle(color: AppColors.textoSuave),
+            ),
+          ),
         ],
       ),
     );

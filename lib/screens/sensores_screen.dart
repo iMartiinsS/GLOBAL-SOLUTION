@@ -20,10 +20,15 @@ class _SensoresScreenState extends State<SensoresScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final lista = _filtro == null ? MockData.sensores : MockData.sensoresDaRegiao(_filtro!);
+    final lista = _filtro == null
+        ? MockData.sensores
+        : MockData.sensoresDaRegiao(_filtro!);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Sensores')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text('Sensores'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,23 +36,41 @@ class _SensoresScreenState extends State<SensoresScreen> {
             height: 56,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
               children: [
-                _chip('Todas', _filtro == null, () => setState(() => _filtro = null)),
+                _chip(
+                  'Todas',
+                  _filtro == null,
+                  () => setState(() => _filtro = null),
+                ),
                 for (final r in MockData.regioes)
-                  _chip(r.nome, _filtro?.id == r.id, () => setState(() => _filtro = r)),
+                  _chip(
+                    r.nome,
+                    _filtro?.id == r.id,
+                    () => setState(() => _filtro = r),
+                  ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-            child: Text('${lista.length} sensores exibidos',
-                style: const TextStyle(color: AppColors.textoSuave)),
+            child: Text(
+              '${lista.length} sensores exibidos',
+              style: const TextStyle(color: AppColors.textoSuave),
+            ),
           ),
           const SizedBox(height: AppSpacing.sm),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, AppSpacing.md),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                0,
+                AppSpacing.md,
+                AppSpacing.md,
+              ),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 260,
                 mainAxisSpacing: AppSpacing.sm + 4,
@@ -66,7 +89,11 @@ class _SensoresScreenState extends State<SensoresScreen> {
   Widget _chip(String rotulo, bool selecionado, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.only(right: AppSpacing.sm),
-      child: ChoiceChip(label: Text(rotulo), selected: selecionado, onSelected: (_) => onTap()),
+      child: ChoiceChip(
+        label: Text(rotulo),
+        selected: selecionado,
+        onSelected: (_) => onTap(),
+      ),
     );
   }
 }
@@ -84,7 +111,9 @@ class _SensorCard extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => SensorDetalheScreen(sensor: sensor)),
+          MaterialPageRoute(
+            builder: (_) => SensorDetalheScreen(sensor: sensor),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.sm + 4),
@@ -96,19 +125,41 @@ class _SensorCard extends StatelessWidget {
                   const Icon(Icons.water_drop, color: AppColors.azul, size: 20),
                   const SizedBox(width: AppSpacing.xs),
                   Expanded(
-                    child: Text(sensor.codigo,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+                    child: Text(
+                      sensor.codigo,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                      ),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.xs),
-              Text(sensor.regiao.nome, style: const TextStyle(color: AppColors.textoSuave, fontSize: 12)),
+              Text(
+                sensor.regiao.nome,
+                style: const TextStyle(
+                  color: AppColors.textoSuave,
+                  fontSize: 12,
+                ),
+              ),
               const Spacer(),
-              Text('${ultima.nivelAguaCm.toStringAsFixed(0)} cm',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: ultima.nivel.cor)),
-              Text('crítico em ${sensor.nivelCriticoCm} cm',
-                  style: const TextStyle(color: AppColors.textoSuave, fontSize: 11)),
+              Text(
+                '${ultima.nivelAguaCm.toStringAsFixed(0)} cm',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w800,
+                  color: ultima.nivel.cor,
+                ),
+              ),
+              Text(
+                'crítico em ${sensor.nivelCriticoCm} cm',
+                style: const TextStyle(
+                  color: AppColors.textoSuave,
+                  fontSize: 11,
+                ),
+              ),
               const SizedBox(height: AppSpacing.sm),
               NivelAguaBar(sensor: sensor, altura: 8),
               const SizedBox(height: AppSpacing.sm),

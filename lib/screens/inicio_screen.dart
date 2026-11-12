@@ -10,7 +10,11 @@ import 'reportar_screen.dart';
 
 /// Tela 2 — Início: situação do bairro do usuário, atalhos (GridView) e alertas ativos (ListView).
 class InicioScreen extends StatelessWidget {
-  const InicioScreen({super.key, required this.usuario, required this.onAbrirAba});
+  const InicioScreen({
+    super.key,
+    required this.usuario,
+    required this.onAbrirAba,
+  });
 
   final Usuario usuario;
   final ValueChanged<int> onAbrirAba;
@@ -28,24 +32,46 @@ class InicioScreen extends StatelessWidget {
       });
 
     final atalhos = <_Atalho>[
-      _Atalho('Reportar alagamento', Icons.add_location_alt_outlined, AppColors.emergencia, () async {
-        final criada = await Navigator.push<Ocorrencia>(
-          context,
-          MaterialPageRoute(builder: (_) => ReportarScreen(regiaoInicial: usuario.regiao)),
-        );
-        if (criada != null) {
-          MockData.ocorrencias.insert(0, criada);
-          onAbrirAba(2); // setState no HomeShell redesenha a aba de ocorrências já com o novo relato
-        }
-      }),
-      _Atalho('Sensores do córrego', Icons.sensors, AppColors.azul, () => onAbrirAba(1)),
-      _Atalho('Minhas ocorrências', Icons.list_alt, AppColors.alerta, () => onAbrirAba(2)),
-      _Atalho('Como se proteger', Icons.health_and_safety_outlined, AppColors.normal,
-          () => Navigator.pushNamed(context, DicasScreen.rota)),
+      _Atalho(
+        'Reportar alagamento',
+        Icons.add_location_alt_outlined,
+        AppColors.emergencia,
+        () async {
+          final criada = await Navigator.push<Ocorrencia>(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ReportarScreen(regiaoInicial: usuario.regiao),
+            ),
+          );
+          if (criada != null) {
+            MockData.ocorrencias.insert(0, criada);
+            onAbrirAba(2); // setState no HomeShell redesenha a aba de ocorrências já com o novo relato
+          }
+        },
+      ),
+      _Atalho(
+        'Sensores do córrego',
+        Icons.sensors,
+        AppColors.azul,
+        () => onAbrirAba(1),
+      ),
+      _Atalho(
+        'Minhas ocorrências',
+        Icons.list_alt,
+        AppColors.alerta,
+        () => onAbrirAba(2),
+      ),
+      _Atalho(
+        'Como se proteger',
+        Icons.health_and_safety_outlined,
+        AppColors.normal,
+        () => Navigator.pushNamed(context, DicasScreen.rota),
+      ),
     ];
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Image.asset('assets/images/logo.png', height: 30),
@@ -57,8 +83,14 @@ class InicioScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
-          Text('Olá, ${usuario.nome.split(' ').first}',
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.texto)),
+          Text(
+            'Olá, ${usuario.nome.split(' ').first}',
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: AppColors.texto,
+            ),
+          ),
           const SizedBox(height: AppSpacing.md),
           _SituacaoBairro(regiao: usuario.regiao, nivel: nivelBairro),
           const SizedBox(height: AppSpacing.md),
@@ -74,13 +106,22 @@ class InicioScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
           Row(
             children: [
-              const Text('Alertas ativos',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.texto)),
+              const Text(
+                'Alertas ativos',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.texto,
+                ),
+              ),
               const SizedBox(width: AppSpacing.sm),
               CircleAvatar(
                 radius: 12,
                 backgroundColor: AppColors.azul,
-                child: Text('${alertas.length}', style: const TextStyle(color: Colors.white, fontSize: 12)),
+                child: Text(
+                  '${alertas.length}',
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
               ),
             ],
           ),
@@ -89,13 +130,16 @@ class InicioScreen extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: alertas.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm + 4),
+            separatorBuilder: (_, _) =>
+                const SizedBox(height: AppSpacing.sm + 4),
             itemBuilder: (context, i) => AlertaCard(
               alerta: alertas[i],
               // passagem de parâmetro pelo construtor da próxima tela
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => AlertaDetalheScreen(alerta: alertas[i])),
+                MaterialPageRoute(
+                  builder: (_) => AlertaDetalheScreen(alerta: alertas[i]),
+                ),
               ),
             ),
           ),
@@ -132,15 +176,26 @@ class _SituacaoBairro extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Seu bairro · ${regiao.nome}', style: const TextStyle(color: Colors.white70, fontSize: 13)),
-                const SizedBox(height: 2),
                 Text(
-                  nivel == NivelRisco.normal ? 'Situação normal' : 'Situação de ${nivel.rotulo.toLowerCase()}',
-                  style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800),
+                  'Seu bairro · ${regiao.nome}',
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
                 ),
                 const SizedBox(height: 2),
-                Text('${sensores.length} sensores monitorando agora',
-                    style: const TextStyle(color: Colors.white, fontSize: 13)),
+                Text(
+                  nivel == NivelRisco.normal
+                      ? 'Situação normal'
+                      : 'Situação de ${nivel.rotulo.toLowerCase()}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '${sensores.length} sensores monitorando agora',
+                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                ),
               ],
             ),
           ),
@@ -184,8 +239,14 @@ class _AtalhoCard extends StatelessWidget {
                 ),
                 child: Icon(atalho.icone, color: atalho.cor),
               ),
-              Text(atalho.titulo,
-                  style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.texto, height: 1.2)),
+              Text(
+                atalho.titulo,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.texto,
+                  height: 1.2,
+                ),
+              ),
             ],
           ),
         ),

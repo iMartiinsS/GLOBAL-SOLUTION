@@ -6,9 +6,8 @@
 
 | Nome | RM | Turma |
 |---|---|---|
-| _Nome completo_ | RM00000 | 2TDS_ |
-| _Nome completo_ | RM00000 | 2TDS_ |
-| _Nome completo_ | RM00000 | 2TDS_ |
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 **Vídeo (YouTube não listado, 720p+):** _cole o link aqui_
 
@@ -173,11 +172,13 @@ bash infra/azure/03-remover-tudo.sh
 
 ## Checklist dos requisitos
 
-- [x] VM Azure provisionada por Azure CLI, com os comandos versionados em `infra/azure/`
-- [x] Docker, Dockerfile e Docker Compose dentro da VM
+Os arquivos e comandos abaixo estão preparados. A execução na Azure, os containers e a persistência ainda precisam ser comprovados na VM.
+
+- [ ] VM Azure provisionada por Azure CLI, com os comandos versionados em `infra/azure/`
+- [ ] Docker, Dockerfile e Docker Compose dentro da VM
 - [x] Container da aplicação: CRUD completo, tabelas relacionadas, persistência, usuário não privilegiado,
       `WORKDIR`, variável de ambiente, porta exposta
 - [x] Container do banco: volume nomeado, variáveis de ambiente, porta, tabelas relacionadas, persistência
 - [x] `docker-compose.yml` com aplicação, banco, network, volume, portas, variáveis e `depends_on` (com healthcheck)
 - [x] Arquitetura macro específica da solução
-- [x] Execução em background (`-d`), logs, `exec`, `SELECT` no banco
+- [ ] Execução em background (`-d`), logs, `exec`, `SELECT` no banco

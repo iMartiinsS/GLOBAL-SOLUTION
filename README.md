@@ -15,11 +15,10 @@ próprios moradores no app mobile.
 
 ## Integrantes
 
-| Nome | RM |
-|---|---|
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
+| Nome | RM | Turma |
+|---|---|---|
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 **Vídeo pitch:** _cole aqui o link do YouTube_
 

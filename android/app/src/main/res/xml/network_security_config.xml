@@ -5,5 +5,7 @@
     <domain>10.0.2.2</domain>
     <domain>localhost</domain>
     <domain>127.0.0.1</domain>
+    <!-- API na VM Azure (HTTP): <rotulo>.<regiao>.cloudapp.azure.com -->
+    <domain includeSubdomains="true">cloudapp.azure.com</domain>
   </domain-config>
 </network-security-config>

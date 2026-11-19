@@ -6,9 +6,8 @@
 
 | Nome | RM | Turma |
 |---|---|---|
-| _Nome completo_ | RM00000 | 2TDS_ |
-| _Nome completo_ | RM00000 | 2TDS_ |
-| _Nome completo_ | RM00000 | 2TDS_ |
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 ## Problema
 
@@ -88,9 +87,17 @@ No **SQL Developer** conectado ao Oracle da FIAP (`oracle.fiap.com.br:1521/ORCL`
   Romano e Jardim Pantanal aparecem em P1. Todas já têm alerta ativo, então a segunda execução não emite
   alertas novos.
 
-As capturas de tela de cada execução estão na pasta `evidencias/`.
+Salvar as capturas reais de cada execução na pasta `evidencias/`. Ainda não foram produzidas neste ambiente.
 
 ## Uso de IA generativa
 
-Usamos o assistente **Claude (Anthropic)** para gerar a primeira versão dos scripts e deste documento. O grupo
-executou tudo no Oracle da FIAP, conferiu os resultados e é capaz de explicar cada bloco.
+Usamos o assistente **Claude (Anthropic)** para gerar a primeira versão dos scripts e deste documento. A execução no Oracle da FIAP ainda precisa ser realizada e conferida pela equipe.
+
+## Execução simplificada e conferência
+
+O arquivo `00_executar_tudo.sql` chama os scripts 01 a 08 e tenta salvar a saída em `evidencias/execucao-oracle.log`.
+Abra-o no SQL Developer e use F5, com a pasta do projeto acessível. O script 01 recria as cinco tabelas GS_* da entrega, apagando os dados anteriores delas.
+O script 08 confere contagens, situação das procedures, erros de compilação e chaves estrangeiras.
+Se o SPOOL não conseguir criar o log, ajuste seu caminho para uma pasta existente com permissão de escrita.
+Confira que as cinco tabelas têm pelo menos dez linhas e que as duas procedures estão VALID, sem linhas em USER_ERRORS.
+O log complementa os prints exigidos; não substitui as capturas.

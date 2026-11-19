@@ -1,0 +1,13 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.log
+
+## Segredos locais (a connection string do Oracle NUNCA vai para o Git)
+appsettings.Development.json
+appsettings.*.local.json
+.env

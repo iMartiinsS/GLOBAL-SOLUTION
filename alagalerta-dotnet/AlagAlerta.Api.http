@@ -1,0 +1,81 @@
+### AlagAlerta .NET — requisições de teste (VS Code REST Client / Visual Studio / Rider)
+@base = http://localhost:5080
+
+### 1. Criar região (201)
+POST {{base}}/api/regioes
+Content-Type: application/json
+
+{ "nome": "Jardim Pantanal", "cidade": "São Paulo", "uf": "SP", "populacaoRisco": 42000 }
+
+### 2. Criar outra região (201)
+POST {{base}}/api/regioes
+Content-Type: application/json
+
+{ "nome": "Jardim Romano", "cidade": "São Paulo", "uf": "SP", "populacaoRisco": 23000 }
+
+### 3. Instalar sensor na região 1 (201)
+POST {{base}}/api/sensores
+Content-Type: application/json
+
+{ "codigo": "SNS-PANT-01", "localizacao": "Córrego Três Pontes - Rua Capachós", "nivelAlertaCm": 120, "nivelCriticoCm": 180, "ultimoNivelCm": 128.5, "status": "Ativo", "regiaoId": 1 }
+
+### 4. Segundo sensor na região 1 (201)
+POST {{base}}/api/sensores
+Content-Type: application/json
+
+{ "codigo": "SNS-PANT-02", "localizacao": "Rio Tietê - Ponte Jd. Helena", "nivelAlertaCm": 250, "nivelCriticoCm": 330, "status": "Ativo", "regiaoId": 1 }
+
+### 5. Listar regiões (200)
+GET {{base}}/api/regioes
+
+### 6. Região por id, com sensores (200)
+GET {{base}}/api/regioes/1
+
+### 7. Sensores de uma região (200)
+GET {{base}}/api/sensores?regiaoId=1
+
+### 8. Sensor por id (200)
+GET {{base}}/api/sensores/1
+
+### 9. Atualizar sensor — água subiu para 185 cm (204)
+PUT {{base}}/api/sensores/1
+Content-Type: application/json
+
+{ "codigo": "SNS-PANT-01", "localizacao": "Córrego Três Pontes - Rua Capachós", "nivelAlertaCm": 120, "nivelCriticoCm": 180, "ultimoNivelCm": 185, "status": "Ativo", "regiaoId": 1 }
+
+### 10. Atualizar região (204)
+PUT {{base}}/api/regioes/2
+Content-Type: application/json
+
+{ "nome": "Jardim Romano", "cidade": "São Paulo", "uf": "SP", "populacaoRisco": 24500 }
+
+### ---------- Erros ----------
+
+### 11. Dados inválidos (400 com mensagens em JSON)
+POST {{base}}/api/regioes
+Content-Type: application/json
+
+{ "nome": "", "cidade": "X", "uf": "sp", "populacaoRisco": -5 }
+
+### 12. Nível crítico menor que o de alerta (400)
+POST {{base}}/api/sensores
+Content-Type: application/json
+
+{ "codigo": "SNS-ERRO-01", "localizacao": "Teste de validação", "nivelAlertaCm": 150, "nivelCriticoCm": 100, "regiaoId": 1 }
+
+### 13. Região inexistente (404)
+GET {{base}}/api/regioes/999
+
+### 14. Sensor inexistente (404)
+DELETE {{base}}/api/sensores/999
+
+### 15. Excluir região que tem sensores (409)
+DELETE {{base}}/api/regioes/1
+
+### ---------- Exclusões ----------
+
+### 16. Excluir sensor (204)
+DELETE {{base}}/api/sensores/2
+
+### 17. Excluir região sem sensores (204)
+DELETE {{base}}/api/regioes/2

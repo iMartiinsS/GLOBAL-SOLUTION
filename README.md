@@ -4,11 +4,10 @@
 
 ## Integrantes
 
-| Nome | RM |
-|---|---|
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
+| Nome | RM | Turma |
+|---|---|---|
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 **Simulação no Wokwi:** _cole o link do projeto salvo_ · **Vídeo:** _link (opcional)_
 

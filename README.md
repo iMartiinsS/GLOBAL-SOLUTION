@@ -15,11 +15,10 @@ próprio morador **relate alagamentos** onde ainda não há sensor.
 
 ## Integrantes
 
-| Nome | RM |
-|---|---|
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
+| Nome | RM | Turma |
+|---|---|---|
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 **Vídeo de demonstração:** _cole aqui o link do YouTube (não listado)_
 
@@ -57,7 +56,7 @@ Pré-requisitos: Flutter 3.x (stable) e um emulador Android/iOS ou dispositivo f
 
 ```bash
 flutter pub get
-flutter run
+flutter run --dart-define=API_URL=http://10.0.2.2:18080
 ```
 
 Login de teste: **cidadao@alagalerta.com** / **Teste@2026**
@@ -71,13 +70,37 @@ flutter test
 Gerar o APK de release:
 
 ```bash
-flutter build apk --release
+flutter build apk --release --dart-define=API_URL=https://SEU-ENDERECO-DA-API
 ```
 
 O arquivo fica em `build/app/outputs/flutter-apk/app-release.apk`.
 
-Os dados são **mockados** (`lib/data/mock_data.dart`) e espelham a carga de demonstração da API AlagAlerta.
-Esta entrega não depende de backend.
+O modo padrão usa a **API Java real**, com login JWT, regiões, sensores e histórico, alertas e envio de ocorrências.
+Inicie a API com `../INICIAR-API.ps1` (porta 18080) e execute o comando acima no emulador Android.
+Para celular físico, configure uma URL HTTPS acessível pelo aparelho. `10.0.2.2` é o endereço do computador visto pelo emulador Android.
+A permissão Android de internet já está configurada; HTTP fica limitado aos endereços locais de desenvolvimento.
+A implantação Azure descrita em DevOps começa em HTTP: para o APK conectado, configure HTTPS ou adicione explicitamente o IP de demonstração ao `network_security_config.xml` antes de compilar.
+
+Para demonstração independente, com dados simulados identificados pelo comando:
+
+```bash
+flutter run --dart-define=DEMO_MODE=true
+flutter build apk --release --dart-define=DEMO_MODE=true
+```
+
+O modo conectado não substitui falhas da API por dados simulados. O token fica apenas na memória e é limpo ao sair.
+O botão de atualizar no Início busca novamente os dados. Ocorrências reais só aparecem como enviadas depois do sucesso na API.
+Remoção com desfazer existe somente no modo de demonstração; o app do cidadão não oferece exclusão administrativa de relatos.
+
+Teste opcional contra API real já iniciada:
+
+```bash
+flutter test --dart-define=RUN_LIVE_API=true --dart-define=TEST_API_URL=http://127.0.0.1:18080
+```
+
+Validações locais em 17/11/2026: cinco testes Flutter aprovados (incluindo integração real) e compilação web aprovada.
+APK e execução Android ainda dependem da instalação do Android SDK; a versão web não substitui o vídeo Mobile.
+
 
 ## Estrutura
 
@@ -96,3 +119,5 @@ lib/
 
 Usamos o assistente **Claude (Anthropic)** para gerar a estrutura inicial das telas, sugerir a paleta de cores e
 redigir este README. O grupo revisou, executou e ajustou todo o código e é capaz de explicar cada widget e decisão.
+
+A integração REST, o tratamento de sessão/erros e os testes adicionais foram implementados com auxílio do Codex (OpenAI). A equipe deve revisar e compreender o resultado antes da apresentação.

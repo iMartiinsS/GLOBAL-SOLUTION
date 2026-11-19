@@ -1,0 +1,56 @@
+name: alagalerta
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: alagalerta-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-alagalerta}
+      POSTGRES_USER: ${POSTGRES_USER:-alagalerta}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no arquivo .env}
+      TZ: America/Sao_Paulo
+    ports:
+      # a porta 5432 NÃO é liberada no NSG da Azure: só acessível de dentro da VM
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - alagalerta-pgdata:/var/lib/postgresql/data
+    networks:
+      - alagalerta-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: alagalerta-api:1.0
+    container_name: alagalerta-api
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-alagalerta}
+      DB_USER: ${POSTGRES_USER:-alagalerta}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET (min. 32 caracteres) no arquivo .env}
+      SEED_ENABLED: ${SEED_ENABLED:-true}
+      TZ: America/Sao_Paulo
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - alagalerta-net
+
+volumes:
+  alagalerta-pgdata:
+    name: alagalerta-pgdata
+
+networks:
+  alagalerta-net:
+    name: alagalerta-net
+    driver: bridge

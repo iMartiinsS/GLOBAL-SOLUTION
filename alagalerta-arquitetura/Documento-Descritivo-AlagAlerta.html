@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>AlagAlerta - Documento Descritivo da Arquitetura de Soluções</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: #1b2333; font-size: 11pt; line-height: 1.45; }
+  h1 { color: #0b3d91; font-size: 24pt; margin: 0 0 4px; }
+  h2 { color: #0b3d91; font-size: 15pt; border-bottom: 2px solid #0b3d91; padding-bottom: 3px; margin-top: 22px; }
+  h3 { font-size: 12pt; margin: 14px 0 4px; }
+  .sub { color: #5b6475; font-size: 12pt; margin: 0 0 14px; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 10pt; }
+  th, td { border: 1px solid #c9d1e0; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #e8eef9; }
+  .capa { border-left: 6px solid #0b3d91; padding: 6px 14px; margin-bottom: 16px; background: #f5f7fb; }
+  .nota { font-size: 9.5pt; color: #5b6475; }
+  .tag { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 9pt; font-weight: 600; }
+  .mot { background: #efe6ff; } .neg { background: #ffffe0; } .app { background: #e0ffff; } .tec { background: #e8f5e0; }
+  ul { margin: 4px 0 8px 18px; padding: 0; }
+  .quebra { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <h1>AlagAlerta</h1>
+  <p class="sub">Saiba antes da água chegar · Arquitetura de Soluções baseada no TOGAF / ArchiMate</p>
+  <p>Global Solution 2026/2 — <b>CitizenTech</b> · FIAP · 2º ano Análise e Desenvolvimento de Sistemas<br>
+     Compliance, Quality Assurance &amp; Tests</p>
+</div>
+
+<h2>1. Projeto e equipe</h2>
+<table>
+  <tr><th style="width:55%">Nome completo</th><th>RM</th><th>Turma</th></tr>
+  <tr><td>Pedro Relich</td><td>RM567933</td><td>2TDSPA</td></tr>
+  <tr><td>Luigi Martins</td><td>RM568381</td><td>2TDSPA</td></tr>
+</table>
+
+<h2>2. Desafio e problema escolhido</h2>
+<p>O desafio CitizenTech pede uma tecnologia que entregue <b>benefício concreto ao cidadão</b>. O grupo escolheu
+o problema das <b>enchentes urbanas</b> (eixo "Clima e emergências" e inspiração 02 do briefing: previsão de
+enchentes com alertas à população).</p>
+<p>Em bairros construídos em várzeas de rios e córregos, a enchente chega em minutos. Hoje o morador costuma
+perceber o risco só quando a água já entrou em casa, porque:</p>
+<ul>
+  <li>não há medição local, em tempo real e acessível ao cidadão, do nível de cada córrego;</li>
+  <li>os avisos oficiais são regionais ("chuva forte na zona leste") e não indicam <b>qual córrego está subindo agora</b>;</li>
+  <li>a energia e a internet costumam falhar justamente durante o temporal;</li>
+  <li>a Defesa Civil recebe relatos dispersos (telefone, redes sociais) e tem dificuldade para priorizar o atendimento.</li>
+</ul>
+<p>No início de fevereiro de 2025, moradores do Jardim Pantanal e do Jardim Helena (zona leste de São Paulo)
+ficaram ilhados por dias, e relatos apontaram a pior cheia desde 2010 [3][4].</p>
+
+<h3>A solução</h3>
+<p><b>AlagAlerta</b> combina:</p>
+<ul>
+  <li><b>Estações IoT de baixo custo</b> (Arduino, sensor ultrassônico e pluviômetro) instaladas em pontes e
+      margens. Elas medem o nível da água e a chuva, classificam o risco e <b>acionam sirene e luzes no local,
+      mesmo sem internet</b>.</li>
+  <li>Uma <b>plataforma em nuvem</b> (API Java + banco de dados) que recebe as leituras, gera <b>alertas por
+      bairro</b> e registra <b>relatos dos moradores</b>.</li>
+  <li>Um <b>app mobile</b> em que o morador recebe o alerta do seu bairro, vê o nível do córrego, relata alagamentos
+      e encontra orientações de segurança.</li>
+  <li>Um <b>módulo de priorização</b> que ordena as regiões por gravidade para a Defesa Civil.</li>
+</ul>
+<p>ODS atendidos: <b>11</b> (Cidades e comunidades sustentáveis, meta 11.5: reduzir mortes e pessoas afetadas por
+desastres) e <b>13</b> (Ação contra a mudança global do clima, meta 13.1: resiliência a desastres naturais).</p>
+
+<h2>3. Público-alvo e estimativa de impacto</h2>
+<h3>Quem usa e se beneficia</h3>
+<table>
+  <tr><th>Público</th><th>Como usa</th><th>Benefício</th></tr>
+  <tr><td><b>Moradores de áreas de risco</b> (público principal)</td><td>App + alarme local da estação</td><td>Aviso antecipado e específico do seu córrego; tempo para retirar pessoas, documentos e bens</td></tr>
+  <tr><td><b>Defesa Civil</b></td><td>Painel/API: alertas, ocorrências, ranking de prioridade</td><td>Visão em tempo real por córrego e por bairro; atendimento priorizado</td></tr>
+  <tr><td><b>Prefeitura / subprefeituras</b></td><td>Histórico de leituras e ocorrências</td><td>Evidência para obras de drenagem e políticas habitacionais</td></tr>
+</table>
+
+<h3>Dimensão do problema (dados oficiais)</h3>
+<table>
+  <tr><th>Indicador</th><th>Valor</th><th>Fonte</th></tr>
+  <tr><td>Pessoas vivendo em áreas de risco de inundação, enxurrada e deslizamento no Brasil</td><td><b>8.270.127</b> pessoas em 872 municípios monitorados</td><td>IBGE/Cemaden, com base no Censo 2010 [1][2]</td></tr>
+  <tr><td>Município com mais moradores em áreas de risco</td><td>Salvador: 1.217.527 pessoas (45,5% da população)</td><td>IBGE/Cemaden [2]</td></tr>
+  <tr><td>Famílias em áreas de risco no Jardim Pantanal (SP), segundo a Prefeitura</td><td>mais de <b>4.000 famílias</b> com remoção anunciada em 2025</td><td>Prefeitura de São Paulo, noticiado em 2025 [5]</td></tr>
+</table>
+
+<h3>Estimativa de impacto do piloto</h3>
+<p>Piloto proposto: <b>bacia do Córrego Três Pontes / várzea do Tietê</b> (Jardim Pantanal e Jardim Helena).</p>
+<table>
+  <tr><th>Item</th><th>Estimativa</th><th>Como foi calculado</th></tr>
+  <tr><td>Pessoas cobertas</td><td>≈ <b>11 mil</b> moradores</td><td>4.000 famílias [5] × 2,79 moradores por domicílio (média nacional do Censo 2022)</td></tr>
+  <tr><td>Estações necessárias</td><td>10 estações + 2 gateways</td><td>1 estação a cada ~500 m de córrego monitorado; gateways LoRa com alcance de 2 a 5 km</td></tr>
+  <tr><td>Custo de hardware</td><td>≈ R$ 5 mil (≈ R$ 0,45 por morador coberto)</td><td>~R$ 400 por estação (microcontrolador, sensor à prova d'água, LoRa, painel solar e bateria) + ~R$ 500 por gateway, a preços de varejo</td></tr>
+  <tr><td>Antecedência do aviso</td><td><b>30 a 90 minutos</b> antes do transbordamento</td><td>Alerta disparado a 70% do nível de alerta; no cenário de teste, a subida de ~20 cm a cada 30 min deixou cerca de 90 min até o nível crítico</td></tr>
+  <tr><td>Tempo entre medição e alerta no app</td><td>&lt; 2 minutos</td><td>Leitura a cada 60 s + processamento na API</td></tr>
+</table>
+<p class="nota">As estimativas do piloto são <b>metas de projeto</b> baseadas nos dados acima e em premissas declaradas.
+Elas serão medidas com os indicadores da camada de Motivação: tempo até o alerta, % de moradores cadastrados e
+tempo de resposta da Defesa Civil.</p>
+
+<h3>Como o impacto será medido e ampliado</h3>
+<ul>
+  <li><b>Indicadores:</b> minutos entre o córrego atingir o limite e o alerta no app; % de domicílios da área de
+      risco cadastrados; tempo entre a ocorrência e o atendimento; nº de pessoas retiradas antes do pico.</li>
+  <li><b>Escala:</b> o modelo de dados já separa região → sensores, então outro bairro ou cidade entra apenas com
+      cadastro. Os 872 municípios monitorados pelo Cemaden são o mercado potencial.</li>
+  <li><b>Sustentabilidade:</b> contratação por prefeituras/Defesa Civil (serviço por estação/mês) e parcerias com
+      escolas e UBS, que hospedam os gateways.</li>
+</ul>
+
+<div class="quebra"></div>
+<h2>4. Arquitetura de Soluções (TOGAF × ArchiMate)</h2>
+<p>O modelo foi feito no <b>Archi</b> (arquivo <code>AlagAlerta.archi</code>) e tem 5 visões: uma completa e uma
+por camada. A tabela mostra como as fases do TOGAF ADM correspondem às camadas modeladas.</p>
+<table>
+  <tr><th>Visão (TOGAF)</th><th>Camada ArchiMate</th><th>Visão no Archi</th></tr>
+  <tr><td>Fase A: Visão da Arquitetura</td><td><span class="tag mot">Motivação</span></td><td>2 - Visão da Arquitetura</td></tr>
+  <tr><td>Fase B: Arquitetura de Negócio</td><td><span class="tag neg">Negócio</span></td><td>3 - Visão de Negócios</td></tr>
+  <tr><td>Fase C: Sistemas de Informação</td><td><span class="tag app">Aplicação</span></td><td>4 - Visão de Sistemas</td></tr>
+  <tr><td>Fase D: Arquitetura de Tecnologia</td><td><span class="tag tec">Tecnologia</span></td><td>5 - Visão de Infraestrutura</td></tr>
+</table>
+
+<h3><span class="tag mot">Motivação</span> Por que a solução existe</h3>
+<ul>
+  <li><b>Stakeholders:</b> moradores de áreas de risco, Defesa Civil, prefeitura/subprefeituras.</li>
+  <li><b>Drivers:</b> enchentes recorrentes em áreas de várzea; chuvas mais intensas com a mudança climática.</li>
+  <li><b>Avaliações:</b> o morador só percebe quando a água entra em casa; os alertas são genéricos por região;
+      energia e internet caem nos temporais.</li>
+  <li><b>Metas:</b> antecipar o aviso, reduzir perdas humanas e materiais, priorizar o atendimento.</li>
+  <li><b>Resultados esperados:</b> alerta em até 2 min; 80% dos moradores cadastrados; tempo de resposta 30% menor.</li>
+  <li><b>Princípios:</b> o alarme local funciona sem internet; proteção de dados pessoais (LGPD).</li>
+  <li><b>Restrições:</b> estação de baixo custo (&lt; R$ 500); conectividade instável no campo.</li>
+  <li><b>Requisitos:</b> medir nível e chuva em tempo real; notificar por bairro; receber relatos; ranking de
+      prioridade; alarme sonoro/visual no local.</li>
+</ul>
+
+<h3><span class="tag neg">Negócio</span> O que a solução faz para as pessoas</h3>
+<ul>
+  <li><b>Atores e papéis:</b> Morador (papel Cidadão alertado), Agente da Defesa Civil, Subprefeitura.</li>
+  <li><b>Evento:</b> chuva forte iniciada dispara o fluxo.</li>
+  <li><b>Processos:</b> Monitorar córregos → Classificar risco → Emitir/elevar alerta da região. Em paralelo,
+      Relatar alagamento → Atender ocorrência, e Priorizar regiões → Atender ocorrência.</li>
+  <li><b>Serviços de negócio:</b> Alerta antecipado de enchente, Relato cidadão de alagamento, Priorização do
+      atendimento. Cada serviço realiza um requisito da camada de Motivação.</li>
+  <li><b>Objetos de negócio:</b> Leitura do córrego, Alerta, Ocorrência, Ranking de prioridade.</li>
+  <li><b>Regra central:</b> o risco é NORMAL, ATENÇÃO (≥ 70% do nível de alerta ou chuva ≥ 30 mm/h), ALERTA
+      (≥ nível de alerta, ou ≥ 70% com chuva ≥ 50 mm/h) ou EMERGÊNCIA (≥ nível crítico). Um alerta ativo só é
+      elevado automaticamente; quem encerra é a Defesa Civil.</li>
+</ul>
+
+<h3><span class="tag app">Aplicação</span> Sistemas que suportam o negócio</h3>
+<table>
+  <tr><th>Componente</th><th>Responsabilidade</th><th>Serviços / interfaces</th></tr>
+  <tr><td>Firmware da Estação (Arduino)</td><td>lê sensores, classifica, aciona alarme local, envia JSON</td><td>Saída JSON serial/LoRa</td></tr>
+  <tr><td>Gateway IoT</td><td>autentica com JWT, envia as leituras, mantém fila quando a rede cai</td><td>consome a API REST</td></tr>
+  <tr><td>API AlagAlerta (Java Spring Boot)</td><td>regras de risco, alertas, ocorrências, segurança JWT por papel, cache, HATEOAS</td><td>Registro de leituras, Gestão de alertas, Gestão de ocorrências, Autenticação JWT · interface REST /api</td></tr>
+  <tr><td>API Cadastro da Rede (.NET 8)</td><td>CRUD de regiões e sensores no Oracle</td><td>Cadastro de regiões e sensores</td></tr>
+  <tr><td>App AlagAlerta (Flutter)</td><td>alertas do bairro, sensores, relatos, orientações</td><td>Telas do app</td></tr>
+  <tr><td>Módulo PL/SQL</td><td>registro de leitura e ranking de prioridade no banco</td><td>Priorização de regiões</td></tr>
+</table>
+<p>Objetos de dados: Região, Sensor (1 região : N sensores), Leitura, Alerta, Ocorrência, Usuário. Leitura,
+Alerta e Ocorrência realizam os objetos de negócio de mesmo nome.</p>
+
+<h3><span class="tag tec">Tecnologia</span> Onde tudo roda</h3>
+<ul>
+  <li><b>Campo:</b> dispositivo Estação Arduino Uno, composto pelo sensor ultrassônico HC-SR04, pluviômetro e
+      sirene/LEDs/LCD; rede <b>LoRa 915 MHz</b> até o <b>Gateway ESP32/Raspberry Pi</b>.</li>
+  <li><b>Transporte:</b> Internet (Wi-Fi com 4G de reserva) até a <b>Azure VNet + NSG</b> (portas 22, 8080 e 8883).</li>
+  <li><b>Nuvem:</b> nó <b>VM Azure Ubuntu 24.04</b> (provisionada por Azure CLI) com <b>Docker Engine + Compose</b>,
+      que compõe o container da API (JRE 21, usuário não-root), o container <b>PostgreSQL 17</b> (volume nomeado)
+      e o broker <b>MQTT Mosquitto</b>.</li>
+  <li><b>Banco acadêmico:</b> servidor Oracle FIAP, que roda a API .NET (EF Core + Migrations) e os scripts PL/SQL.</li>
+  <li><b>Usuário:</b> smartphone Android/iOS com o app.</li>
+  <li><b>Artefatos:</b> estacao.ino, gateway.mjs, alagalerta-api.jar, docker-compose.yml, scripts PL/SQL,
+      app-release.apk. Cada um realiza o componente de aplicação correspondente.</li>
+</ul>
+
+<h2>5. Decisões de arquitetura e justificativas</h2>
+<table>
+  <tr><th>Decisão</th><th>Justificativa</th></tr>
+  <tr><td>Classificação de risco na <b>borda</b> (estação), além da nuvem</td><td>garante o aviso local quando energia ou internet caem (princípio "funciona sem internet")</td></tr>
+  <tr><td>Mesma regra de risco em firmware, API e PL/SQL</td><td>o alerta da sirene e o do app nunca divergem</td></tr>
+  <tr><td>Sensor ultrassônico sem contato</td><td>não fica submerso, não corrói e não é arrastado; baixo custo</td></tr>
+  <tr><td>LoRa + MQTT</td><td>longo alcance e baixo consumo no campo; protocolo leve e tolerante a quedas</td></tr>
+  <tr><td>Gateway com fila (store-and-forward)</td><td>nenhuma leitura se perde em queda de conexão</td></tr>
+  <tr><td>API stateless com JWT e papéis</td><td>separa o que o morador, o agente e o administrador podem fazer; escala horizontalmente</td></tr>
+  <tr><td>Cache dos alertas ativos</td><td>o pico de acesso ao app coincide com o pico de risco; protege o banco no momento crítico</td></tr>
+  <tr><td>Containers + Azure CLI</td><td>infraestrutura reproduzível e documentada</td></tr>
+  <tr><td>Dados pessoais mínimos e senha com hash</td><td>atende à LGPD e reduz o impacto de um vazamento</td></tr>
+</table>
+
+<h2>6. Referências</h2>
+<ol class="nota">
+  <li>IBGE. <i>População em áreas de risco no Brasil</i>. https://www.ibge.gov.br/geociencias/informacoes-ambientais/estudos-ambientais/21538-populacao-em-areas-de-risco-no-brasil.html</li>
+  <li>Agência IBGE Notícias. <i>Em 2010, Brasil tinha 8,3 milhões de pessoas morando em áreas com risco de desastres naturais</i>. https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/21565-em-2010-brasil-tinha-8-3-milhoes-de-pessoas-morando-em-areas-com-risco-de-desastres-naturais.html</li>
+  <li>Agência Pública. <i>São Paulo: chuvas deixam moradores ilhados na maior cidade do país</i>, fev. 2025. https://apublica.org/2025/02/sao-paulo-chuvas-deixam-moradores-ilhados-na-maior-cidade-do-pais/</li>
+  <li>Jornal de Brasília. <i>Moradores do Jardim Pantanal, em SP, se mobilizam após alagamentos</i>, 2025. https://jornaldebrasilia.com.br/noticias/brasil/moradores-do-jardim-pantanal-em-sp-se-mobilizam-apos-alagamentos/</li>
+  <li>BNews São Paulo. <i>Plano da Prefeitura para as enchentes no Jardim Pantanal</i>, 2025. https://www.bnewssaopaulo.com.br/amp/noticias/politica/plano-prefeitura-enchentes-jardim-pantanal.html</li>
+  <li>ONU Brasil. <i>Objetivos de Desenvolvimento Sustentável 11 e 13</i>. https://brasil.un.org/pt-br/sdgs</li>
+</ol>
+
+<p class="nota">Uso de IA generativa: o grupo usou o assistente Claude (Anthropic) para estruturar este documento
+e a primeira versão do modelo ArchiMate. O conteúdo foi revisado, ajustado e validado pelo grupo no Archi.</p>
+</body>
+</html>

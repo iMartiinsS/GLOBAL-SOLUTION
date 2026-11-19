@@ -4,11 +4,10 @@
 
 ## Integrantes
 
-| Nome | RM |
-|---|---|
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
-| _Nome completo_ | RM00000 |
+| Nome | RM | Turma |
+|---|---|---|
+| Pedro Relich | RM567933 | 2TDSPA |
+| Luigi Martins | RM568381 | 2TDSPA |
 
 **Vídeo (CRUD + tabelas no Oracle):** _cole aqui o link do YouTube_
 
@@ -21,7 +20,7 @@ região são avisados pelo app.
 Esta API em **ASP.NET Core 8** cuida do **cadastro da rede de monitoramento**: as **regiões** (bairros em área
 de risco) e os **sensores** instalados em cada uma. Cada sensor guarda seus limites de alerta e de emergência e o
 último nível lido; a API devolve a situação atual (`NORMAL`, `ATENCAO`, `ALERTA`, `EMERGENCIA` ou `SEM_DADOS`).
-É essa base que o app Mobile consome e que roda em container na entrega de DevOps.
+Esta API é a entrega específica de .NET. O app integrado e os containers de DevOps usam a API Java.
 
 ODS: **11** (Cidades e comunidades sustentáveis) e **13** (Ação contra a mudança global do clima).
 
@@ -161,4 +160,4 @@ SELECT * FROM "__EFMigrationsHistory";
 ## Uso de IA generativa
 
 Usamos o assistente **Claude (Anthropic)** para gerar a estrutura inicial do projeto e redigir este README.
-O grupo revisou, executou e testou o código contra o Oracle da FIAP e é capaz de explicar cada parte.
+Compilação local verificada em 17/11/2026, com destino net8.0, sem erros. A execução das migrations e do CRUD no Oracle da FIAP ainda precisa ser comprovada pela equipe.

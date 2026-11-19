@@ -19,7 +19,8 @@ enum NivelRisco {
 enum StatusOcorrencia {
   aberta('Aberta', Icons.mark_email_unread_outlined),
   emAtendimento('Em atendimento', Icons.engineering_outlined),
-  resolvida('Resolvida', Icons.task_alt);
+  resolvida('Resolvida', Icons.task_alt),
+  descartada('Descartada', Icons.cancel_outlined);
 
   const StatusOcorrencia(this.rotulo, this.icone);
 
@@ -28,7 +29,12 @@ enum StatusOcorrencia {
 }
 
 class Regiao {
-  const Regiao({required this.id, required this.nome, required this.cidade, required this.populacaoRisco});
+  const Regiao({
+    required this.id,
+    required this.nome,
+    required this.cidade,
+    required this.populacaoRisco,
+  });
 
   final int id;
   final String nome;
@@ -37,7 +43,12 @@ class Regiao {
 }
 
 class Leitura {
-  const Leitura({required this.dataHora, required this.nivelAguaCm, required this.chuvaMmHora, required this.nivel});
+  const Leitura({
+    required this.dataHora,
+    required this.nivelAguaCm,
+    required this.chuvaMmHora,
+    required this.nivel,
+  });
 
   final DateTime dataHora;
   final double nivelAguaCm;
@@ -69,7 +80,8 @@ class Sensor {
   Leitura get ultimaLeitura => leituras.first;
 
   /// Fração do nível crítico já atingida (0 a 1), usada nas barras de nível.
-  double get ocupacao => (ultimaLeitura.nivelAguaCm / nivelCriticoCm).clamp(0.0, 1.0);
+  double get ocupacao =>
+      (ultimaLeitura.nivelAguaCm / nivelCriticoCm).clamp(0.0, 1.0);
 }
 
 class Alerta {
@@ -115,7 +127,11 @@ class Ocorrencia {
 }
 
 class Usuario {
-  const Usuario({required this.nome, required this.email, required this.regiao});
+  const Usuario({
+    required this.nome,
+    required this.email,
+    required this.regiao,
+  });
 
   final String nome;
   final String email;

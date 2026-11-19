@@ -5,12 +5,37 @@ import '../models/models.dart';
 class MockData {
   MockData._();
 
-  static const jardimPantanal = Regiao(id: 1, nome: 'Jardim Pantanal', cidade: 'São Paulo', populacaoRisco: 42000);
-  static const vilaPrudente = Regiao(id: 2, nome: 'Vila Prudente', cidade: 'São Paulo', populacaoRisco: 18500);
-  static const jardimRomano = Regiao(id: 3, nome: 'Jardim Romano', cidade: 'São Paulo', populacaoRisco: 23000);
-  static const francoDaRocha = Regiao(id: 4, nome: 'Centro', cidade: 'Franco da Rocha', populacaoRisco: 9600);
+  static const jardimPantanal = Regiao(
+    id: 1,
+    nome: 'Jardim Pantanal',
+    cidade: 'São Paulo',
+    populacaoRisco: 42000,
+  );
+  static const vilaPrudente = Regiao(
+    id: 2,
+    nome: 'Vila Prudente',
+    cidade: 'São Paulo',
+    populacaoRisco: 18500,
+  );
+  static const jardimRomano = Regiao(
+    id: 3,
+    nome: 'Jardim Romano',
+    cidade: 'São Paulo',
+    populacaoRisco: 23000,
+  );
+  static const francoDaRocha = Regiao(
+    id: 4,
+    nome: 'Centro',
+    cidade: 'Franco da Rocha',
+    populacaoRisco: 9600,
+  );
 
-  static const regioes = [jardimPantanal, vilaPrudente, jardimRomano, francoDaRocha];
+  static const regioes = [
+    jardimPantanal,
+    vilaPrudente,
+    jardimRomano,
+    francoDaRocha,
+  ];
 
   static final DateTime _agora = DateTime.now();
 
@@ -20,7 +45,9 @@ class MockData {
     return [
       for (var i = total - 1; i >= 0; i--)
         Leitura(
-          dataHora: _agora.subtract(Duration(minutes: 30 * (total - 1 - i) + 5)),
+          dataHora: _agora.subtract(
+            Duration(minutes: 30 * (total - 1 - i) + 5),
+          ),
           nivelAguaCm: valores[i].$1,
           chuvaMmHora: valores[i].$2,
           nivel: valores[i].$3,
@@ -103,7 +130,8 @@ class MockData {
     Alerta(
       id: 1,
       nivel: NivelRisco.alerta,
-      mensagem: 'Nível do córrego subindo rápido (128 cm) no Córrego Três Pontes. '
+      mensagem:
+          'Nível do córrego subindo rápido (128 cm) no Córrego Três Pontes. '
           'Prepare-se para deixar o local e retire documentos e remédios de áreas baixas.',
       regiao: jardimPantanal,
       emitidoEm: _agora.subtract(const Duration(minutes: 10)),
@@ -113,7 +141,8 @@ class MockData {
     Alerta(
       id: 2,
       nivel: NivelRisco.atencao,
-      mensagem: 'Chuva forte (31 mm/h) e nível em elevação no Córrego Lajeado. '
+      mensagem:
+          'Chuva forte (31 mm/h) e nível em elevação no Córrego Lajeado. '
           'Evite transitar pela Rua Kumaki Aoki e áreas alagáveis.',
       regiao: jardimRomano,
       emitidoEm: _agora.subtract(const Duration(minutes: 35)),
@@ -123,7 +152,8 @@ class MockData {
     Alerta(
       id: 3,
       nivel: NivelRisco.atencao,
-      mensagem: 'Previsão de temporal entre 16h e 20h. Mantenha o celular carregado '
+      mensagem:
+          'Previsão de temporal entre 16h e 20h. Mantenha o celular carregado '
           'e combine com a família um ponto de encontro seguro.',
       regiao: vilaPrudente,
       emitidoEm: _agora.subtract(const Duration(hours: 2)),
@@ -163,17 +193,24 @@ class MockData {
     ),
   ];
 
-  static const usuarioTeste = Usuario(nome: 'Maria Cidadã', email: 'cidadao@alagalerta.com', regiao: jardimPantanal);
+  static const usuarioTeste = Usuario(
+    nome: 'Maria Cidadã',
+    email: 'cidadao@alagalerta.com',
+    regiao: jardimPantanal,
+  );
   static const senhaTeste = 'Teste@2026';
 
   static int proximoIdOcorrencia() =>
       ocorrencias.map((o) => o.id).fold(0, (a, b) => a > b ? a : b) + 1;
 
-  static List<Sensor> sensoresDaRegiao(Regiao r) => sensores.where((s) => s.regiao.id == r.id).toList();
+  static List<Sensor> sensoresDaRegiao(Regiao r) =>
+      sensores.where((s) => s.regiao.id == r.id).toList();
 
   static NivelRisco nivelDaRegiao(Regiao r) {
     final ativos = alertas.where((a) => a.regiao.id == r.id);
     if (ativos.isEmpty) return NivelRisco.normal;
-    return ativos.map((a) => a.nivel).reduce((a, b) => a.index >= b.index ? a : b);
+    return ativos
+        .map((a) => a.nivel)
+        .reduce((a, b) => a.index >= b.index ? a : b);
   }
 }

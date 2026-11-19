@@ -21,6 +21,7 @@ az vm create \
   --admin-username "$ADMIN_USER" \
   --generate-ssh-keys \
   --public-ip-sku Standard \
+  --public-ip-address-dns-name "$DNS_LABEL" \
   --nsg "${VM_NAME}-nsg" \
   --nsg-rule SSH \
   --os-disk-size-gb 30 \
@@ -45,6 +46,8 @@ az vm run-command invoke \
 
 echo ">> 5/5 Pronto"
 IP=$(az vm show -d -g "$RESOURCE_GROUP" -n "$VM_NAME" --query publicIps -o tsv)
+FQDN=$(az vm show -d -g "$RESOURCE_GROUP" -n "$VM_NAME" --query fqdns -o tsv)
 echo "IP público: $IP"
+echo "DNS:        $FQDN"
 echo "Acesse:     ssh $ADMIN_USER@$IP"
 echo "Depois siga o passo 'Deploy na VM' do README."

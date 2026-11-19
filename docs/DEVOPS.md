@@ -53,7 +53,7 @@ flowchart LR
 | VM | `vm-alagalerta`, Ubuntu 24.04 LTS, `Standard_B2s` (2 vCPU, 4 GB), disco de 30 GB, login por chave SSH |
 | NSG | regras de entrada: 22 (SSH) e 8080 (API). A 5432 **não** é exposta à internet |
 | Container `alagalerta-api` | imagem multi-stage (Maven → JRE 21 Alpine), usuário `alagalerta`, `WORKDIR /app`, `ENV` de perfil/porta/JVM, `EXPOSE 8080`, healthcheck em `/actuator/health` |
-| Container `alagalerta-db` | `postgres:17-alpine`, variáveis `POSTGRES_*`, porta 5432, healthcheck `pg_isready` |
+| Container `alagalerta-db` | `postgres:17-alpine`, variáveis `POSTGRES_*`, porta 5432 publicada só em `127.0.0.1` (a API usa a rede interna), healthcheck `pg_isready` |
 | Volume | `alagalerta-pgdata` (nomeado) em `/var/lib/postgresql/data`: os dados sobrevivem a `docker compose down` |
 | Rede | `alagalerta-net` (bridge): a API acessa o banco pelo nome do serviço `db` |
 | Tabelas | `TB_REGIAO`, `TB_SENSOR`, `TB_LEITURA`, `TB_ALERTA`, `TB_OCORRENCIA`, `TB_USUARIO` (relacionadas por FK) |
@@ -78,12 +78,12 @@ flowchart LR
 No **Azure Cloud Shell (Bash)** ou em um terminal com Azure CLI e `az login` feito:
 
 ```bash
-git clone https://github.com/<usuario>/alagalerta-api.git
+git clone https://github.com/iMartiinsS/alagalerta-api.git
 cd alagalerta-api
 bash infra/azure/01-criar-vm.sh
 ```
 
-O script cria o grupo de recursos, a VM com IP público e chave SSH, libera a porta 8080 no NSG e instala o
+O script cria o grupo de recursos, a VM com IP público, nome DNS (`alagalerta-rm568381.<regiao>.cloudapp.azure.com`) e chave SSH, libera a porta 8080 no NSG e instala o
 Docker + Compose na VM (`az vm run-command`). No final ele mostra o IP público.
 
 Os comandos executados, um a um (é o mesmo conteúdo do script):
@@ -92,6 +92,7 @@ Os comandos executados, um a um (é o mesmo conteúdo do script):
 az group create --name rg-alagalerta --location brazilsouth
 az vm create --resource-group rg-alagalerta --name vm-alagalerta --image Ubuntu2404 --size Standard_B2s \
   --admin-username azureuser --generate-ssh-keys --public-ip-sku Standard \
+  --public-ip-address-dns-name alagalerta-rm568381 \
   --nsg vm-alagalerta-nsg --nsg-rule SSH --os-disk-size-gb 30
 az vm open-port --resource-group rg-alagalerta --name vm-alagalerta --port 8080 --priority 1010
 az vm run-command invoke --resource-group rg-alagalerta --name vm-alagalerta \
@@ -104,7 +105,7 @@ az vm show -d -g rg-alagalerta -n vm-alagalerta --query publicIps -o tsv
 ```bash
 ssh azureuser@<IP_PUBLICO>
 
-git clone https://github.com/<usuario>/alagalerta-api.git
+git clone https://github.com/iMartiinsS/alagalerta-api.git
 cd alagalerta-api
 cp .env.example .env
 nano .env                      # troque POSTGRES_PASSWORD e JWT_SECRET (openssl rand -base64 48)

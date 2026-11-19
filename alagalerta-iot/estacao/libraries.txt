@@ -1,0 +1,2 @@
+# Bibliotecas usadas pelo Wokwi / Arduino IDE
+LiquidCrystal I2C

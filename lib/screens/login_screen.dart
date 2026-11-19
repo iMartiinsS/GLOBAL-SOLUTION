@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../theme/app_theme.dart';
 import 'home_shell.dart';
 
@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   bool _senhaVisivel = false;
+  bool _entrando = false;
 
   @override
   void dispose() {
@@ -41,22 +42,30 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  void _entrar() {
-    if (!_formKey.currentState!.validate()) return;
-
-    final email = _emailController.text.trim().toLowerCase();
-    final ok =
-        email == MockData.usuarioTeste.email &&
-        _senhaController.text == MockData.senhaTeste;
-    if (!ok) {
-      showDialog<void>(
+  Future<void> _entrar() async {
+    if (_entrando || !_formKey.currentState!.validate()) return;
+    setState(() => _entrando = true);
+    try {
+      final usuario = await AppData.login(
+        _emailController.text.trim().toLowerCase(),
+        _senhaController.text,
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Olá, ${usuario.nome.split(' ').first}!')),
+      );
+      Navigator.pushReplacementNamed(
+        context,
+        HomeShell.rota,
+        arguments: usuario,
+      );
+    } catch (erro) {
+      if (!mounted) return;
+      await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-          icon: const Icon(Icons.lock_outline, color: AppColors.emergencia),
           title: const Text('Não foi possível entrar'),
-          content: const Text(
-            'E-mail ou senha incorretos. Confira os dados e tente novamente.',
-          ),
+          content: Text(erro.toString()),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -65,22 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       );
-      return;
+    } finally {
+      if (mounted) setState(() => _entrando = false);
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Bem-vinda, ${MockData.usuarioTeste.nome.split(' ').first}!',
-        ),
-      ),
-    );
-    // passagem de parâmetro: o usuário logado segue para a tela principal
-    Navigator.pushReplacementNamed(
-      context,
-      HomeShell.rota,
-      arguments: MockData.usuarioTeste,
-    );
   }
 
   @override
@@ -149,9 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   FilledButton.icon(
-                    onPressed: _entrar,
+                    onPressed: _entrando ? null : _entrar,
                     icon: const Icon(Icons.login),
-                    label: const Text('Entrar'),
+                    label: Text(_entrando ? 'Entrando...' : 'Entrar'),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   Container(

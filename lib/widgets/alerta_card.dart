@@ -29,21 +29,33 @@ class AlertaCard extends StatelessWidget {
                 children: [
                   NivelBadge(nivel: alerta.nivel, compacto: true),
                   const Spacer(),
-                  Text(tempoRelativo(alerta.emitidoEm),
-                      style: const TextStyle(color: AppColors.textoSuave, fontSize: 12)),
+                  Text(
+                    tempoRelativo(alerta.emitidoEm),
+                    style: const TextStyle(
+                      color: AppColors.textoSuave,
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 '${alerta.regiao.nome} · ${alerta.regiao.cidade}',
-                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppColors.texto),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: AppColors.texto,
+                ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 alerta.mensagem,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: AppColors.textoSuave, height: 1.3),
+                style: const TextStyle(
+                  color: AppColors.textoSuave,
+                  height: 1.3,
+                ),
               ),
             ],
           ),

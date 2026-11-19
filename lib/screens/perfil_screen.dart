@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
+import '../data/app_data.dart';
 import '../theme/app_theme.dart';
 import 'dicas_screen.dart';
 import 'login_screen.dart';
@@ -35,11 +36,14 @@ class _PerfilScreenState extends State<PerfilScreen> {
             child: const Text('Cancelar'),
           ),
           TextButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              LoginScreen.rota,
-              (_) => false,
-            ),
+            onPressed: () {
+              AppData.logout();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                LoginScreen.rota,
+                (_) => false,
+              );
+            },
             child: const Text('Sair'),
           ),
         ],

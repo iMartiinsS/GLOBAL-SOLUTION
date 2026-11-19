@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 import '../widgets/alerta_card.dart';
@@ -21,8 +21,8 @@ class InicioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nivelBairro = MockData.nivelDaRegiao(usuario.regiao);
-    final alertas = [...MockData.alertas]
+    final nivelBairro = AppData.nivelDaRegiao(usuario.regiao);
+    final alertas = [...AppData.alertas]
       ..sort((a, b) {
         // alertas do bairro do usuário primeiro, depois por gravidade
         final meuA = a.regiao.id == usuario.regiao.id ? 0 : 1;
@@ -44,7 +44,7 @@ class InicioScreen extends StatelessWidget {
             ),
           );
           if (criada != null) {
-            MockData.ocorrencias.insert(0, criada);
+            AppData.ocorrencias.insert(0, criada);
             onAbrirAba(2); // setState no HomeShell redesenha a aba de ocorrências já com o novo relato
           }
         },
@@ -72,6 +72,25 @@ class InicioScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            tooltip: 'Atualizar dados',
+            icon: const Icon(Icons.refresh),
+            onPressed: () async {
+              try {
+                await AppData.refresh();
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Dados atualizados.')),
+                );
+              } catch (erro) {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(erro.toString())));
+              }
+            },
+          ),
+        ],
         title: Row(
           children: [
             Image.asset('assets/images/logo.png', height: 30),
@@ -157,7 +176,7 @@ class _SituacaoBairro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sensores = MockData.sensoresDaRegiao(regiao);
+    final sensores = AppData.sensoresDaRegiao(regiao);
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(

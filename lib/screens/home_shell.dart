@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../models/models.dart';
 import 'inicio_screen.dart';
 import 'ocorrencias_screen.dart';
@@ -20,16 +20,31 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   int _abaAtual = 0;
+  @override
+  void initState() {
+    super.initState();
+    AppData.revision.addListener(_atualizar);
+  }
+
+  void _atualizar() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    AppData.revision.removeListener(_atualizar);
+    super.dispose();
+  }
 
   void _irPara(int aba) => setState(() => _abaAtual = aba);
 
   @override
   Widget build(BuildContext context) {
     // parâmetro recebido da tela de login via Navigator.pushReplacementNamed.
-    // Se a tela for recarregada (ex.: F5 no navegador), o argumento se perde: mantém o usuário da sessão de teste.
+    // A sessão permanece em memória enquanto o app estiver aberto.
     final usuario =
         ModalRoute.of(context)?.settings.arguments as Usuario? ??
-        MockData.usuarioTeste;
+        AppData.usuario!;
 
     final abas = <Widget>[
       InicioScreen(usuario: usuario, onAbrirAba: _irPara),

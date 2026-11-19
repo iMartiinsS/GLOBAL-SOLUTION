@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 import '../utils/formatos.dart';
@@ -28,18 +28,18 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
       ),
     );
     if (criada != null) {
-      setState(() => MockData.ocorrencias.insert(0, criada));
+      setState(() => AppData.ocorrencias.insert(0, criada));
     }
   }
 
   void _remover(Ocorrencia o) {
-    setState(() => MockData.ocorrencias.remove(o));
+    setState(() => AppData.ocorrencias.remove(o));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Relato #${o.id} removido'),
         action: SnackBarAction(
           label: 'Desfazer',
-          onPressed: () => setState(() => MockData.ocorrencias.insert(0, o)),
+          onPressed: () => setState(() => AppData.ocorrencias.insert(0, o)),
         ),
       ),
     );
@@ -47,7 +47,7 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final todas = MockData.ocorrencias;
+    final todas = AppData.ocorrencias;
     final lista = _filtro == null
         ? todas
         : todas.where((o) => o.status == _filtro).toList();
@@ -141,7 +141,9 @@ class _OcorrenciasScreenState extends State<OcorrenciasScreen> {
                         const SizedBox(height: AppSpacing.sm),
                     itemBuilder: (context, i) => _OcorrenciaCard(
                       ocorrencia: lista[i],
-                      onRemover: lista[i].status == StatusOcorrencia.aberta
+                      onRemover:
+                          AppData.demo &&
+                              lista[i].status == StatusOcorrencia.aberta
                           ? () => _remover(lista[i])
                           : null,
                     ),
@@ -163,6 +165,7 @@ class _OcorrenciaCard extends StatelessWidget {
     StatusOcorrencia.aberta => AppColors.alerta,
     StatusOcorrencia.emAtendimento => AppColors.azul,
     StatusOcorrencia.resolvida => AppColors.normal,
+    StatusOcorrencia.descartada => AppColors.textoSuave,
   };
 
   @override

@@ -14,6 +14,12 @@ class SensorDetalheScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (sensor.leituras.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: Text(sensor.codigo)),
+        body: const Center(child: Text('Sem leituras nas últimas 24 horas')),
+      );
+    }
     final ultima = sensor.ultimaLeitura;
     final cronologico = sensor.leituras.reversed.toList();
 

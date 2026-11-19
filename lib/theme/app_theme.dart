@@ -39,7 +39,11 @@ ThemeData buildAppTheme() {
       foregroundColor: Colors.white,
       centerTitle: false,
       elevation: 0,
-      titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+      titleTextStyle: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+      ),
     ),
     cardTheme: CardThemeData(
       color: Colors.white,

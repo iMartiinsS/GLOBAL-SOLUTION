@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 
@@ -24,6 +24,7 @@ class _ReportarScreenState extends State<ReportarScreen> {
   final _pessoas = TextEditingController();
   late Regiao _regiao = widget.regiaoInicial;
   bool _pessoaIlhada = false;
+  bool _enviando = false;
 
   @override
   void dispose() {
@@ -51,6 +52,7 @@ class _ReportarScreenState extends State<ReportarScreen> {
   }
 
   Future<void> _enviar() async {
+    if (_enviando) return;
     if (!_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -85,25 +87,34 @@ class _ReportarScreenState extends State<ReportarScreen> {
     if (confirmado != true || !mounted) return;
 
     final descricao = _descricao.text.trim();
-    final ocorrencia = Ocorrencia(
-      id: MockData.proximoIdOcorrencia(),
-      descricao: _pessoaIlhada ? '[PESSOA ILHADA] $descricao' : descricao,
-      endereco: _endereco.text.trim(),
-      regiao: _regiao,
-      registradaEm: DateTime.now(),
-      alturaAguaCm: int.tryParse(_altura.text.trim()),
-      pessoasAfetadas: int.tryParse(_pessoas.text.trim()),
-    );
+    setState(() => _enviando = true);
+    try {
+      final ocorrencia = await AppData.registrar(
+        descricao: _pessoaIlhada ? '[PESSOA ILHADA] $descricao' : descricao,
+        endereco: _endereco.text.trim(),
+        regiao: _regiao,
+        alturaAguaCm: int.tryParse(_altura.text.trim()),
+        pessoasAfetadas: int.tryParse(_pessoas.text.trim()),
+      );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: AppColors.normal,
-        content: Text(
-          'Relato #${ocorrencia.id} enviado. Obrigado por ajudar seu bairro!',
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: AppColors.normal,
+          content: Text(
+            'Relato #${ocorrencia.id} enviado. Obrigado por ajudar seu bairro!',
+          ),
         ),
-      ),
-    );
-    Navigator.pop(context, ocorrencia);
+      );
+      Navigator.pop(context, ocorrencia);
+    } catch (erro) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(erro.toString())));
+      }
+    } finally {
+      if (mounted) setState(() => _enviando = false);
+    }
   }
 
   @override
@@ -127,7 +138,7 @@ class _ReportarScreenState extends State<ReportarScreen> {
                 prefixIcon: Icon(Icons.location_city),
               ),
               items: [
-                for (final r in MockData.regioes)
+                for (final r in AppData.regioes)
                   DropdownMenuItem(
                     value: r,
                     child: Text('${r.nome} · ${r.cidade}'),
@@ -138,6 +149,7 @@ class _ReportarScreenState extends State<ReportarScreen> {
             const SizedBox(height: AppSpacing.md),
             TextFormField(
               controller: _endereco,
+              maxLength: 200,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 labelText: 'Endereço ou ponto de referência',
@@ -148,8 +160,8 @@ class _ReportarScreenState extends State<ReportarScreen> {
             const SizedBox(height: AppSpacing.md),
             TextFormField(
               controller: _descricao,
+              maxLength: _pessoaIlhada ? 484 : 500,
               maxLines: 3,
-              maxLength: 300,
               decoration: const InputDecoration(
                 labelText: 'O que está acontecendo?',
                 alignLabelWithHint: true,
@@ -201,7 +213,7 @@ class _ReportarScreenState extends State<ReportarScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
             FilledButton.icon(
-              onPressed: _enviar,
+              onPressed: _enviando ? null : _enviar,
               icon: const Icon(Icons.send),
               label: const Text('Enviar relato'),
             ),

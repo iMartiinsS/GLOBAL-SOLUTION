@@ -12,7 +12,10 @@ class NivelBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: compacto ? 8 : 10, vertical: compacto ? 3 : 5),
+      padding: EdgeInsets.symmetric(
+        horizontal: compacto ? 8 : 10,
+        vertical: compacto ? 3 : 5,
+      ),
       decoration: BoxDecoration(
         color: nivel.cor.withValues(alpha: 0.14),
         borderRadius: BorderRadius.circular(20),

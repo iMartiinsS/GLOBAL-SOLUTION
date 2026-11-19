@@ -40,7 +40,11 @@ class NivelAguaBar extends StatelessWidget {
               ),
               Positioned(
                 left: largura * marcaAlerta - 1,
-                child: Container(width: 2, height: altura + 4, color: AppColors.alerta),
+                child: Container(
+                  width: 2,
+                  height: altura + 4,
+                  color: AppColors.alerta,
+                ),
               ),
             ],
           ),

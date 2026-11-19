@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/mock_data.dart';
+import '../data/app_data.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 import '../widgets/nivel_agua_bar.dart';
@@ -21,8 +21,8 @@ class _SensoresScreenState extends State<SensoresScreen> {
   @override
   Widget build(BuildContext context) {
     final lista = _filtro == null
-        ? MockData.sensores
-        : MockData.sensoresDaRegiao(_filtro!);
+        ? AppData.sensores
+        : AppData.sensoresDaRegiao(_filtro!);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class _SensoresScreenState extends State<SensoresScreen> {
                   _filtro == null,
                   () => setState(() => _filtro = null),
                 ),
-                for (final r in MockData.regioes)
+                for (final r in AppData.regioes)
                   _chip(
                     r.nome,
                     _filtro?.id == r.id,
@@ -105,6 +105,14 @@ class _SensorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (sensor.leituras.isEmpty) {
+      return Card(
+        child: ListTile(
+          title: Text(sensor.codigo),
+          subtitle: const Text('Sem leituras nas últimas 24 horas'),
+        ),
+      );
+    }
     final ultima = sensor.ultimaLeitura;
     return Card(
       clipBehavior: Clip.antiAlias,

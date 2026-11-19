@@ -12,7 +12,7 @@ services:
       TZ: America/Sao_Paulo
     ports:
       # a porta 5432 NÃO é liberada no NSG da Azure: só acessível de dentro da VM
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - alagalerta-pgdata:/var/lib/postgresql/data
     networks:

@@ -1,0 +1,13 @@
+Ah, Luigi, então, tô te mandando o ZIP do AlagAlerta. Os códigos principais já estão feitos, nossos nomes e a turma já estão preenchidos, e a integração do app com a API Java já foi implementada e testada. Também já conferi a compilação do .NET e o gateway IoT funcionando com a API.
+
+Preciso que você pegue a parte final:
+
+1. Subir os repositórios no GitHub e adicionar o professor no Mobile.
+2. Fazer o deploy na Azure e gravar o vídeo de DevOps. Os scripts e o passo a passo já estão prontos.
+3. Rodar as migrations do .NET e os scripts de banco no Oracle da FIAP, tirar os prints e gravar o CRUD do .NET. Já deixei um SQL que chama todos os scripts em sequência.
+4. Salvar o projeto no Wokwi, completar os testes do circuito e tirar os prints. O gateway com a API já foi testado.
+5. Abrir o modelo no Archi, validar e exportar o PDF do diagrama. O documento descritivo já tá pronto e preenchido.
+6. Rodar o app no emulador/celular, gerar/publicar o APK e fechar os vídeos de Mobile e do pitch. O roteiro já tá dividido entre nós dois.
+7. Colocar os links reais nos arquivos da pasta entregas, conferir os ZIPs/PDFs e mandar no portal até 19/11, às 23h55.
+
+Começa pelo COMECE-AQUI-LUIGI.md, que deixei tudo na ordem e com os comandos. A parte que mais falta agora é Azure, Oracle e as gravações. Se alguma coisa dessas já tiver sido feita por fora, é só atualizar os links e conferir. Fechou?

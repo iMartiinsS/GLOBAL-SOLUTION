@@ -1,0 +1,9 @@
+GLOBAL SOLUTION 2026/2 - CITIZENTECH
+Solucao: AlagAlerta - alerta de enchentes
+
+Integrantes (RM - Nome completo - Turma):
+RM567933 - Pedro Relich - 2TDSPA
+RM568381 - Luigi Martins - 2TDSPA
+
+Repositorio GitHub (publico): https://github.com/iMartiinsS/alagalerta-api
+Video pitch: https://youtu.be/<id>

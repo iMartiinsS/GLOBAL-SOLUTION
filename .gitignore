@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+output/
+bin/
+obj/
+target/
+build/
+.dart_tool/
+node_modules/
+*.jks
+*.keystore
+key.properties
+local.properties

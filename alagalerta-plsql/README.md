@@ -101,3 +101,11 @@ O script 08 confere contagens, situação das procedures, erros de compilação 
 Se o SPOOL não conseguir criar o log, ajuste seu caminho para uma pasta existente com permissão de escrita.
 Confira que as cinco tabelas têm pelo menos dez linhas e que as duas procedures estão VALID, sem linhas em USER_ERRORS.
 O log complementa os prints exigidos; não substitui as capturas.
+
+## Evidências de execução
+
+A pasta `evidencias/` contém o log e os prints de uma **execução de teste** do `00_executar_tudo.sql` em um
+**Oracle Database 23ai Free local** (SQL*Plus, 19/11/2026). Não é o Oracle da FIAP, e cada print traz esse
+aviso. Resultado: os 8 scripts rodaram sem erro de compilação; `08_verificacao.sql` mostrou GS_REGIAO 10,
+GS_SENSOR 12, GS_LEITURA 33, GS_ALERTA 11, GS_OCORRENCIA 10 e as procedures PRC_REGISTRAR_LEITURA e
+PRC_PRIORIZAR_REGIOES com status VALID. Os erros ORA-20011/ORA-20012 nos cenários 4 e 5 são recusas esperadas.

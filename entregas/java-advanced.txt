@@ -5,5 +5,5 @@ Integrantes (RM - Nome completo - Turma):
 RM567933 - Pedro Relich - 2TDSPA
 RM568381 - Luigi Martins - 2TDSPA
 
-Repositorio GitHub (publico): https://github.com/iMartiinsS/alagalerta-api
-Video pitch: https://youtu.be/<id>
+Repositorio GitHub (publico): https://github.com/iMartiinsS/GLOBAL-SOLUTION/tree/claude/alagalerta-gs-delivery-v0qss0/alagalerta-api
+Video pitch: nao enviado

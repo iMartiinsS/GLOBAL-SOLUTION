@@ -7,7 +7,7 @@
 | Pedro Relich | RM567933 | 2TDSPA |
 | Luigi Martins | RM568381 | 2TDSPA |
 
-- **GitHub:** https://github.com/iMartiinsS/alagalerta-api
-- **Video:** https://youtu.be/<id>
+- **GitHub:** https://github.com/iMartiinsS/GLOBAL-SOLUTION/tree/claude/alagalerta-gs-delivery-v0qss0/alagalerta-api
+- **Video:** nao enviado
 
 > Gere o PDF: abra no VS Code/Typora ou cole no Google Docs e exporte em PDF.

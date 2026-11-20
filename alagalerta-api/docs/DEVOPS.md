@@ -9,7 +9,7 @@
 | Pedro Relich | RM567933 | 2TDSPA |
 | Luigi Martins | RM568381 | 2TDSPA |
 
-**Vídeo (YouTube não listado, 720p+):** _cole o link aqui_
+**Vídeo:** não enviado
 
 ## A solução
 
@@ -78,8 +78,8 @@ flowchart LR
 No **Azure Cloud Shell (Bash)** ou em um terminal com Azure CLI e `az login` feito:
 
 ```bash
-git clone https://github.com/iMartiinsS/alagalerta-api.git
-cd alagalerta-api
+git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git
+cd GLOBAL-SOLUTION/alagalerta-api
 bash infra/azure/01-criar-vm.sh
 ```
 
@@ -105,8 +105,8 @@ az vm show -d -g rg-alagalerta -n vm-alagalerta --query publicIps -o tsv
 ```bash
 ssh azureuser@<IP_PUBLICO>
 
-git clone https://github.com/iMartiinsS/alagalerta-api.git
-cd alagalerta-api
+git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git
+cd GLOBAL-SOLUTION/alagalerta-api
 cp .env.example .env
 nano .env                      # troque POSTGRES_PASSWORD e JWT_SECRET (openssl rand -base64 48)
 

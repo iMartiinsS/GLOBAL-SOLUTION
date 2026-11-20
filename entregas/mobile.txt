@@ -1,4 +1,4 @@
-Nome do grupo: <nome do grupo>
+Nome do grupo: AlagAlerta
 
 GLOBAL SOLUTION 2026/2 - CITIZENTECH
 Solucao: AlagAlerta - alerta de enchentes
@@ -7,5 +7,6 @@ Integrantes (RM - Nome completo - Turma):
 RM567933 - Pedro Relich - 2TDSPA
 RM568381 - Luigi Martins - 2TDSPA
 
-Video (YouTube nao listado): https://youtu.be/<id>
-Repositorio GitHub (publico): https://github.com/iMartiinsS/alagalerta-app
+Video (YouTube nao listado): nao enviado
+Repositorio GitHub (publico): https://github.com/iMartiinsS/GLOBAL-SOLUTION/tree/claude/alagalerta-gs-delivery-v0qss0/alagalerta-app
+APK (release v1.0): https://github.com/iMartiinsS/GLOBAL-SOLUTION/raw/claude/alagalerta-gs-delivery-v0qss0/release/AlagAlerta-v1.0.apk

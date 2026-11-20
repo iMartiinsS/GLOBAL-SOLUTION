@@ -24,10 +24,7 @@ Confira se é a assinatura certa (ex.: *Azure for Students*). Se precisar trocar
 Clone o repositório:
 
 ```bash
-# se o repositório alagalerta-api já foi criado:
-git clone https://github.com/iMartiinsS/alagalerta-api.git && cd alagalerta-api
-# se ainda não foi criado, use o backup:
-# git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git && cd GLOBAL-SOLUTION/alagalerta-api
+git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git && cd GLOBAL-SOLUTION/alagalerta-api
 ```
 
 > Se o script falhar com erro de **região ou tamanho não permitido** (comum na Azure for Students), rode antes
@@ -76,8 +73,7 @@ ssh azureuser@$IP
 Dentro da VM:
 
 ```bash
-git clone https://github.com/iMartiinsS/alagalerta-api.git && cd alagalerta-api
-# (ou o backup: git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git && cd GLOBAL-SOLUTION/alagalerta-api)
+git clone -b claude/alagalerta-gs-delivery-v0qss0 https://github.com/iMartiinsS/GLOBAL-SOLUTION.git && cd GLOBAL-SOLUTION/alagalerta-api
 
 cat > .env <<EOF
 POSTGRES_DB=alagalerta
@@ -165,7 +161,7 @@ Abra no navegador `http://<IP>:8080/swagger-ui.html` e mostre a lista de endpoin
 
 ```bash
 ssh azureuser@$IP
-cd alagalerta-api   # (ou GLOBAL-SOLUTION/alagalerta-api)
+cd GLOBAL-SOLUTION/alagalerta-api
 docker exec -it alagalerta-db psql -U alagalerta -d alagalerta -c '\dt'
 docker exec -it alagalerta-db psql -U alagalerta -d alagalerta -c "SELECT * FROM tb_regiao WHERE nome='Vila Azure';"
 docker exec -it alagalerta-db psql -U alagalerta -d alagalerta -c \

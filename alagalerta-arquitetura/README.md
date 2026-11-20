@@ -27,3 +27,8 @@
    página por camada. Salve como `AlagAlerta-Arquitetura.pdf`.
 5. Preencha nomes e RMs no documento descritivo (`.html`), gere o PDF de novo (Ctrl+P → Salvar como PDF) e
    compacte em um `.zip`: documento + `.archi` + PDF do diagrama.
+
+## Diagrama exportado
+
+`AlagAlerta-Diagrama.pdf` reúne as 5 visões exportadas pelo **Archi 5.11** (relatório gerado pela linha de comando
+do Archi a partir de `AlagAlerta.archi`). O layout foi ampliado para que todos os rótulos caibam nos elementos.

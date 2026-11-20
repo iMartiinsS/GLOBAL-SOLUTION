@@ -174,13 +174,13 @@ bash infra/azure/03-remover-tudo.sh
 
 ## Checklist dos requisitos
 
-Os arquivos e comandos abaixo estão preparados. A execução na Azure, os containers e a persistência ainda precisam ser comprovados na VM.
+Executado na Azure em 20/11/2026. API no ar em http://alagalerta-rm568381.northcentralus.cloudapp.azure.com:8080 (Swagger em `/swagger-ui.html`). Saídas reais em [`EVIDENCIAS-AZURE.md`](EVIDENCIAS-AZURE.md).
 
-- [ ] VM Azure provisionada por Azure CLI, com os comandos versionados em `infra/azure/`
-- [ ] Docker, Dockerfile e Docker Compose dentro da VM
+- [x] VM Azure provisionada por Azure CLI, com os comandos versionados em `infra/azure/`
+- [x] Docker, Dockerfile e Docker Compose dentro da VM
 - [x] Container da aplicação: CRUD completo, tabelas relacionadas, persistência, usuário não privilegiado,
       `WORKDIR`, variável de ambiente, porta exposta
 - [x] Container do banco: volume nomeado, variáveis de ambiente, porta, tabelas relacionadas, persistência
 - [x] `docker-compose.yml` com aplicação, banco, network, volume, portas, variáveis e `depends_on` (com healthcheck)
 - [x] Arquitetura macro específica da solução
-- [ ] Execução em background (`-d`), logs, `exec`, `SELECT` no banco
+- [x] Execução em background (`-d`), logs, `exec`, `SELECT` no banco

@@ -7,3 +7,4 @@ RM568381 - Luigi Martins - 2TDSPA
 
 Repositorio GitHub (publico): https://github.com/iMartiinsS/GLOBAL-SOLUTION/tree/claude/alagalerta-gs-delivery-v0qss0/alagalerta-api
 Video pitch: nao enviado
+API publicada (Azure): http://alagalerta-rm568381.northcentralus.cloudapp.azure.com:8080/swagger-ui.html

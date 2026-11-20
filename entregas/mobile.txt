@@ -10,3 +10,4 @@ RM568381 - Luigi Martins - 2TDSPA
 Video (YouTube nao listado): nao enviado
 Repositorio GitHub (publico): https://github.com/iMartiinsS/GLOBAL-SOLUTION/tree/claude/alagalerta-gs-delivery-v0qss0/alagalerta-app
 APK (release v1.0): https://github.com/iMartiinsS/GLOBAL-SOLUTION/raw/claude/alagalerta-gs-delivery-v0qss0/release/AlagAlerta-v1.0.apk
+API publicada (Azure): http://alagalerta-rm568381.northcentralus.cloudapp.azure.com:8080/swagger-ui.html

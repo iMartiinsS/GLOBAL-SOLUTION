@@ -18,7 +18,7 @@ az account show --query "{assinatura:name, id:id}" -o table
 Confira se é a assinatura certa (ex.: *Azure for Students*). Se precisar trocar:
 `az account set --subscription "<nome ou id>"`.
 
-**Custo:** VM `Standard_B2s` (2 vCPU, 4 GB) em `brazilsouth`, cerca de US$ 1 por dia. **Não rode o
+**Custo:** VM `Standard_B2als_v2` (2 vCPU, 4 GB) em `northcentralus`, cerca de US$ 0,90 por dia. **Não rode o
 `03-remover-tudo.sh` antes da avaliação.**
 
 Clone o repositório:
@@ -52,7 +52,7 @@ bash infra/azure/01-criar-vm.sh
 > "Esse script cria o grupo de recursos, a VM Ubuntu 24.04 com IP público e nome DNS, libera a porta 8080 no
 > grupo de segurança e já instala o Docker e o Compose dentro da VM pelo run-command."
 
-(Corte a espera. No fim aparecem o **IP** e o **DNS**: `alagalerta-rm568381.brazilsouth.cloudapp.azure.com`.)
+(Corte a espera. No fim aparecem o **IP** e o **DNS**: `alagalerta-rm568381.northcentralus.cloudapp.azure.com`.)
 
 Mostre que a 5432 **não** está liberada:
 

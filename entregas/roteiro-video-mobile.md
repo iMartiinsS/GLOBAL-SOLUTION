@@ -12,7 +12,7 @@
 3. Grave a tela do celular: Android tem gravador nativo (puxe a barra de cima → **Gravar tela**, com microfone),
    ou espelhe no PC com o **scrcpy** e grave com o OBS.
 
-> O APK aponta para `http://alagalerta-rm568381.brazilsouth.cloudapp.azure.com:8080`. **A VM da Azure precisa
+> O APK aponta para `http://alagalerta-rm568381.northcentralus.cloudapp.azure.com:8080`. **A VM da Azure precisa
 > estar no ar.** Se você criar a VM em outra região, me avise que eu gero o APK de novo.
 > Sem a VM, ainda dá pra gravar no **modo demo** (dados locais): `flutter run --dart-define=DEMO_MODE=true`.
 
@@ -22,7 +22,7 @@
 flutter doctor
 flutter emulators --launch <id>        # ou abra pelo Device Manager do Android Studio
 flutter devices
-.\INICIAR-APP.ps1 -Dispositivo emulator-5554 -ApiUrl http://alagalerta-rm568381.brazilsouth.cloudapp.azure.com:8080
+.\INICIAR-APP.ps1 -Dispositivo emulator-5554 -ApiUrl http://alagalerta-rm568381.northcentralus.cloudapp.azure.com:8080
 ```
 
 ## Gravação

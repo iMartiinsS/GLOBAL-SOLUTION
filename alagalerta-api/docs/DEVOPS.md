@@ -28,9 +28,9 @@ flowchart LR
         DC["🧑‍🚒 Defesa Civil<br/>Swagger / painel"]
     end
 
-    subgraph Azure["Microsoft Azure · rg-alagalerta · brazilsouth"]
+    subgraph Azure["Microsoft Azure · rg-alagalerta · VM em northcentralus"]
         NSG["NSG vm-alagalerta-nsg<br/>entrada: 22/SSH, 8080/API<br/>5432 bloqueada"]
-        subgraph VM["VM vm-alagalerta · Ubuntu 24.04 · Standard_B2s · IP público"]
+        subgraph VM["VM vm-alagalerta · Ubuntu 24.04 · Standard_B2als_v2 · IP público"]
             subgraph Docker["Docker Engine + Compose · rede bridge alagalerta-net"]
                 API["Container alagalerta-api<br/>Java 21 + Spring Boot 4<br/>usuário alagalerta (não root)<br/>WORKDIR /app · porta 8080"]
                 DB[("Container alagalerta-db<br/>PostgreSQL 17<br/>porta 5432 · TZ São Paulo")]
@@ -49,8 +49,8 @@ flowchart LR
 
 | Componente | Detalhe |
 |---|---|
-| Grupo de recursos | `rg-alagalerta` (região `brazilsouth`, configurável) |
-| VM | `vm-alagalerta`, Ubuntu 24.04 LTS, `Standard_B2s` (2 vCPU, 4 GB), disco de 30 GB, login por chave SSH |
+| Grupo de recursos | `rg-alagalerta` (grupo em `brazilsouth`; VM em `northcentralus`, pois o B2s estava sem capacidade nas regiões permitidas à assinatura Azure for Students) |
+| VM | `vm-alagalerta`, Ubuntu 24.04 LTS, `Standard_B2als_v2` (2 vCPU, 4 GB), disco de 30 GB, login por chave SSH |
 | NSG | regras de entrada: 22 (SSH) e 8080 (API). A 5432 **não** é exposta à internet |
 | Container `alagalerta-api` | imagem multi-stage (Maven → JRE 21 Alpine), usuário `alagalerta`, `WORKDIR /app`, `ENV` de perfil/porta/JVM, `EXPOSE 8080`, healthcheck em `/actuator/health` |
 | Container `alagalerta-db` | `postgres:17-alpine`, variáveis `POSTGRES_*`, porta 5432 publicada só em `127.0.0.1` (a API usa a rede interna), healthcheck `pg_isready` |
@@ -90,7 +90,8 @@ Os comandos executados, um a um (é o mesmo conteúdo do script):
 
 ```bash
 az group create --name rg-alagalerta --location brazilsouth
-az vm create --resource-group rg-alagalerta --name vm-alagalerta --image Ubuntu2404 --size Standard_B2s \
+az vm create --resource-group rg-alagalerta --name vm-alagalerta --location northcentralus \
+  --image Canonical:ubuntu-24_04-lts:server:latest --size Standard_B2als_v2 \
   --admin-username azureuser --generate-ssh-keys --public-ip-sku Standard \
   --public-ip-address-dns-name alagalerta-rm568381 \
   --nsg vm-alagalerta-nsg --nsg-rule SSH --os-disk-size-gb 30

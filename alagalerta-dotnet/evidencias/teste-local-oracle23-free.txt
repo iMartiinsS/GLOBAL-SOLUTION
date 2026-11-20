@@ -1,0 +1,20 @@
+Execucao de TESTE das 17 requisicoes do AlagAlerta.Api.http (19/11/2026)
+Banco: Oracle Database 23ai Free em container local (NAO e o Oracle da FIAP), apos 'dotnet ef database update' (migration CriacaoInicial aplicada).
+
+OK  201 (esperado 201)  POST /api/regioes  — 1. Criar região
+OK  201 (esperado 201)  POST /api/regioes  — 2. Criar outra região
+OK  201 (esperado 201)  POST /api/sensores  — 3. Instalar sensor na região 1
+OK  201 (esperado 201)  POST /api/sensores  — 4. Segundo sensor na região 1
+OK  200 (esperado 200)  GET /api/regioes  — 5. Listar regiões
+OK  200 (esperado 200)  GET /api/regioes/1  — 6. Região por id, com sensores
+OK  200 (esperado 200)  GET /api/sensores?regiaoId=1  — 7. Sensores de uma região
+OK  200 (esperado 200)  GET /api/sensores/1  — 8. Sensor por id
+OK  204 (esperado 204)  PUT /api/sensores/1  — 9. Atualizar sensor — água subiu para 185 cm
+OK  204 (esperado 204)  PUT /api/regioes/2  — 10. Atualizar região
+OK  400 (esperado 400)  POST /api/regioes  — 11. Dados inválidos
+OK  400 (esperado 400)  POST /api/sensores  — 12. Nível crítico menor que o de alerta
+OK  404 (esperado 404)  GET /api/regioes/999  — 13. Região inexistente
+OK  404 (esperado 404)  DELETE /api/sensores/999  — 14. Sensor inexistente
+OK  409 (esperado 409)  DELETE /api/regioes/1  — 15. Excluir região que tem sensores
+OK  204 (esperado 204)  DELETE /api/sensores/2  — 16. Excluir sensor
+OK  204 (esperado 204)  DELETE /api/regioes/2  — 17. Excluir região sem sensores
